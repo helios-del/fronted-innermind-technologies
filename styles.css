@@ -229,6 +229,8 @@ html.has-custom-cursor,html.has-custom-cursor a,html.has-custom-cursor button{cu
 
 /* ---------- 8. CARDS ---------- */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.split-2{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.split-2--center{align-items:center}
 .card{
   background:var(--glass);border:1px solid var(--line);border-radius:var(--radius-md);
   padding:34px 30px;transition:transform var(--dur-med) var(--ease),border-color var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease);
@@ -283,7 +285,6 @@ html.has-custom-cursor,html.has-custom-cursor a,html.has-custom-cursor button{cu
 .eos{position:relative}
 .eos-diagram{position:relative;margin-top:64px}
 .eos-svg{width:100%;height:auto;overflow:visible}
-.eos-path{fill:none;stroke:url(#eosGrad);stroke-width:1.4;stroke-dasharray:6 3;opacity:.55}
 .eos-path-solid{fill:none;stroke:url(#eosGrad);stroke-width:1.5;stroke-linecap:round;
   stroke-dasharray:var(--len,1000);stroke-dashoffset:var(--len,1000);
   transition:stroke-dashoffset 1.6s var(--ease-out);
@@ -304,8 +305,6 @@ html.has-custom-cursor,html.has-custom-cursor a,html.has-custom-cursor button{cu
 .eos-stage.stage-input .tag{color:var(--amber)}
 .eos-stage h3{font-size:18px;margin-bottom:10px}
 .eos-stage p{font-size:14.5px;margin-bottom:0}
-.eos-stage .glyph{width:30px;height:30px;margin-bottom:16px;color:var(--cyan)}
-.eos-stage.stage-input .glyph{color:var(--amber)}
 
 /* ---------- 13. DIMENSIONS CONSTELLATION ---------- */
 .dims{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;margin-top:60px}
@@ -443,6 +442,8 @@ footer{border-top:1px solid var(--line);padding:80px 0 34px;position:relative}
 /* ---------- 21. RESPONSIVE ---------- */
 @media(max-width:1080px){
   .grid{grid-template-columns:repeat(2,1fr)}
+  .eos-stages{grid-template-columns:repeat(2,1fr);margin-top:24px}
+  .tech-diagram{grid-template-columns:1fr}
   .explorer{grid-template-columns:1fr}
   .explorer-tabs{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
   .explorer-tab{border-bottom:0;border-right:1px solid var(--line);flex:0 0 auto;min-width:220px}
@@ -452,6 +453,7 @@ footer{border-top:1px solid var(--line);padding:80px 0 34px;position:relative}
 @media(max-width:900px){
   .dims{grid-template-columns:1fr;gap:44px}
   .constellation{max-width:400px}
+  .split-2{grid-template-columns:1fr;gap:36px}
 }
 @media(max-width:800px){
   .nav-links,.nav-cta{display:none}
@@ -459,8 +461,10 @@ footer{border-top:1px solid var(--line);padding:80px 0 34px;position:relative}
   section{padding:100px 0}
   .section-tight{padding:76px 0}
   .hero-inner{padding:100px 0 70px}
+  .grid{grid-template-columns:1fr}
   .tech-diagram,.eos-stages{grid-template-columns:1fr}
   .eos-diagram svg.eos-svg{display:none}
+  .eos-stages{margin-top:0;gap:14px}
   .contact{grid-template-columns:1fr;gap:44px}
   .cta-band{padding:56px 28px}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
