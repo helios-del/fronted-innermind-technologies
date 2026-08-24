@@ -267,9 +267,60 @@ html.has-custom-cursor,html.has-custom-cursor a,html.has-custom-cursor button{cu
 @keyframes cue{0%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);opacity:.4}}
 
 /* ---------- 10. PAGE HERO (subpages) ---------- */
-.page-hero{padding:118px 0 76px;position:relative}
-.page-hero h1{font-size:clamp(40px,6.4vw,68px);margin:20px 0 24px}
-.page-hero .lead{font-size:19px}
+/* ---------- 10. PAGE HERO (subpages) ---------- */
+
+.page-hero{
+  padding:118px 0 76px;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.page-hero h1{
+  font-size:clamp(40px,6.4vw,68px);
+  margin:20px 0 24px;
+}
+
+.page-hero .lead{
+  font-size:19px;
+}
+
+/* Interactive canvas background */
+.page-hero .container{
+  position:relative;
+  z-index:2;
+}
+
+.page-hero .hero-field{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+.page-hero .hero-field canvas{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.page-hero .hero-field::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      100deg,
+      var(--bg) 0%,
+      rgba(7,15,28,.72) 32%,
+      transparent 68%
+    ),
+    linear-gradient(
+      0deg,
+      var(--bg) 0%,
+      transparent 30%
+    );
+  pointer-events:none;
+}
 
 /* ---------- 11. QUOTE BAND ---------- */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);position:relative;overflow:hidden}
