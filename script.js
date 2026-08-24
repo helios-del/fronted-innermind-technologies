@@ -28,11 +28,13 @@
   if (menuBtn && mobilePanel) {
     const closePanel = () => {
       menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open menu");
       mobilePanel.classList.remove("is-open");
       document.body.classList.remove("nav-open");
     };
     const openPanel = () => {
       menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "Close menu");
       mobilePanel.classList.add("is-open");
       document.body.classList.add("nav-open");
     };
