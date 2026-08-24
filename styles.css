@@ -88,6 +88,11 @@ h1,h2,h3,h4{font-family:var(--font-display);line-height:1.06;letter-spacing:-.03
 
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
 
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
 .skip-link{
   position:fixed;top:-60px;left:16px;z-index:200;
   background:var(--cyan);color:#04141a;font-weight:700;font-size:14px;
