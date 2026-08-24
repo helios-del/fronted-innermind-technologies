@@ -197,16 +197,31 @@
   /* ---------- Applications explorer ---------- */
   const explorer = document.querySelector(".explorer");
   if (explorer) {
-    const tabs = explorer.querySelectorAll(".explorer-tab");
+    const tabs = Array.from(explorer.querySelectorAll(".explorer-tab"));
     const panels = explorer.querySelectorAll(".explorer-panel");
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        const target = tab.getAttribute("data-target");
-        tabs.forEach(t => {
-          t.classList.toggle("is-active", t === tab);
-          t.setAttribute("aria-selected", t === tab ? "true" : "false");
-        });
-        panels.forEach(p => p.classList.toggle("is-active", p.id === target));
+    const activate = (tab) => {
+      const target = tab.getAttribute("data-target");
+      tabs.forEach(t => {
+        t.classList.toggle("is-active", t === tab);
+        t.setAttribute("aria-selected", t === tab ? "true" : "false");
+        t.tabIndex = t === tab ? 0 : -1;
+      });
+      panels.forEach(p => p.classList.toggle("is-active", p.id === target));
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => activate(tab));
+      tab.addEventListener("keydown", e => {
+        const horizontal = window.matchMedia("(max-width:1080px)").matches;
+        const nextKey = horizontal ? "ArrowRight" : "ArrowDown";
+        const prevKey = horizontal ? "ArrowLeft" : "ArrowUp";
+        let target = null;
+        if (e.key === nextKey) target = tabs[(i + 1) % tabs.length];
+        if (e.key === prevKey) target = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (target) {
+          e.preventDefault();
+          target.focus();
+          activate(target);
+        }
       });
     });
   }
