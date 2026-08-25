@@ -267,70 +267,16 @@ html.has-custom-cursor,html.has-custom-cursor a,html.has-custom-cursor button{cu
 @keyframes cue{0%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.3);opacity:.4}}
 
 /* ---------- 10. PAGE HERO (subpages) ---------- */
-/* ---------- 10. PAGE HERO (subpages) ---------- */
-
-.page-hero{
-  padding:118px 0 76px;
-  position:relative;
-  overflow:hidden;
-  isolation:isolate;
-}
-
-.page-hero h1{
-  font-size:clamp(40px,6.4vw,68px);
-  margin:20px 0 24px;
-}
-
-.page-hero .lead{
-  font-size:19px;
-}
-
-/* Interactive canvas background */
-.page-hero .hero-field{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:0;
-}
-
-.page-hero .hero-field canvas{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-.page-hero .hero-field::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(
-      90deg,
-      var(--bg) 0%,
-      rgba(7,15,28,.82) 32%,
-      rgba(7,15,28,.42) 60%,
-      transparent 100%
-    ),
-    linear-gradient(
-      0deg,
-      var(--bg) 0%,
-      transparent 45%
-    );
-}
-
-.page-hero > .container{
-  position:relative;
-  z-index:2;
-}
+.page-hero{padding:118px 0 76px;position:relative}
+.page-hero h1{font-size:clamp(40px,6.4vw,68px);margin:20px 0 24px}
+.page-hero .lead{font-size:19px}
 
 /* ---------- 11. QUOTE BAND ---------- */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);position:relative;overflow:hidden}
 .band::before{
   content:"";position:absolute;top:50%;left:50%;width:900px;height:900px;
   background:radial-gradient(circle,rgba(93,140,255,.08),transparent 68%);
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%);animation:driftGlow 22s ease-in-out infinite;
 }
 .quote{font-family:var(--font-display);font-size:clamp(26px,3.9vw,46px);letter-spacing:-.03em;max-width:920px;position:relative}
 .quote .who{display:block;margin-top:26px;font-family:var(--font-mono);font-size:13px;color:var(--text-mute);letter-spacing:.08em}
@@ -465,11 +411,16 @@ form{display:grid;gap:16px}
 /* ---------- 18. CTA BAND ---------- */
 .cta-band{
   border:1px solid var(--line);border-radius:var(--radius-lg);padding:80px 60px;text-align:center;
-  background:radial-gradient(ellipse 600px 300px at 50% 0%,rgba(77,232,220,.1),transparent 70%),var(--glass);
+  background:var(--glass);
   position:relative;overflow:hidden;
 }
-.cta-band h2{max-width:640px;margin-inline:auto}
-.cta-band .buttons{justify-content:center}
+.cta-band::before{
+  content:"";position:absolute;left:50%;top:0;width:600px;height:300px;
+  background:radial-gradient(ellipse 600px 300px at 50% 0%,rgba(77,232,220,.12),transparent 70%);
+  transform:translate(-50%,0);animation:driftGlow 16s ease-in-out infinite;pointer-events:none;
+}
+.cta-band h2{max-width:640px;margin-inline:auto;position:relative}
+.cta-band .buttons{justify-content:center;position:relative}
 
 /* ---------- 19. FOOTER ---------- */
 footer{border-top:1px solid var(--line);padding:80px 0 34px;position:relative}
@@ -492,6 +443,95 @@ footer{border-top:1px solid var(--line);padding:80px 0 34px;position:relative}
 .reveal-group .reveal:nth-child(2){transition-delay:.12s}
 .reveal-group .reveal:nth-child(3){transition-delay:.24s}
 .reveal-group .reveal:nth-child(4){transition-delay:.36s}
+
+/* ---------- 20b. WORD-BY-WORD HEADLINE / QUOTE REVEAL ---------- */
+@keyframes driftGlow{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-46%,-54%) scale(1.1)}
+}
+.split-reveal .word{
+  display:inline-block;opacity:0;transform:translateY(.6em);
+  transition:opacity .7s var(--ease-out) var(--stagger,0s),transform .7s var(--ease-out) var(--stagger,0s);
+  will-change:transform,opacity;
+}
+.split-reveal.is-visible .word{opacity:1;transform:translateY(0)}
+
+/* ---------- 20c. SCROLL PROGRESS ---------- */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:2px;width:0%;z-index:90;
+  background:var(--grad-signal);transition:width .12s linear;
+  box-shadow:0 0 12px rgba(77,232,220,.5);
+}
+body.nav-open .scroll-progress{opacity:0}
+
+/* ---------- 20d. NAV HOVER PILL ---------- */
+.nav-links{position:relative}
+.nav-pill{
+  position:absolute;top:2px;height:calc(100% - 4px);border-radius:var(--radius-full);
+  background:rgba(255,255,255,.05);border:1px solid var(--line);
+  transition:transform .45s var(--ease-out),width .45s var(--ease-out),opacity .3s var(--ease);
+  pointer-events:none;z-index:0;opacity:0;left:0;
+}
+.nav-links a{position:relative;z-index:1}
+
+/* ---------- 20e. SPOTLIGHT + TILT SURFACES ---------- */
+.has-spotlight{position:relative}
+.spot-glow{
+  position:absolute;inset:0;pointer-events:none;opacity:0;z-index:0;border-radius:inherit;
+  background:radial-gradient(circle at var(--sx,50%) var(--sy,50%),rgba(77,232,220,.16),transparent 55%);
+  transition:opacity .4s var(--ease);
+}
+.has-spotlight:hover .spot-glow{opacity:1}
+.has-spotlight > *:not(.spot-glow){position:relative;z-index:1}
+.has-tilt.has-spotlight:hover{
+  transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-4px);
+}
+
+/* ---------- 20f. EXPLORER SLIDING INDICATOR ---------- */
+.explorer-tabs{position:relative}
+.explorer-indicator{
+  position:absolute;left:0;top:0;background:linear-gradient(180deg,transparent,rgba(77,232,220,.06));
+  border-left:2px solid transparent;border-image:var(--grad-signal) 1;
+  transition:transform .45s var(--ease-out),height .45s var(--ease-out),width .45s var(--ease-out);
+  pointer-events:none;z-index:0;width:100%;
+}
+
+/* ---------- 20g. CONSTELLATION EXTRAS ---------- */
+.constellation-connector{position:absolute;inset:0;pointer-events:none;z-index:1}
+.constellation-nodes{z-index:2}
+.constellation-core{overflow:visible}
+.constellation-core::before{
+  content:"";position:absolute;inset:-18px;border-radius:50%;
+  border:1px solid rgba(77,232,220,.35);animation:sonar 3.4s ease-out infinite;
+}
+@keyframes sonar{
+  0%{transform:scale(.55);opacity:.85}
+  100%{transform:scale(1.7);opacity:0}
+}
+.dim-panel .index,.dim-panel h3,.dim-panel p{transition:opacity .22s var(--ease)}
+
+/* ---------- 20h. EXPLORER MOTIF BREATHE ---------- */
+.explorer-motif{animation:motifBreathe 6.5s ease-in-out infinite;transform-origin:center}
+@keyframes motifBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+
+/* ---------- 20i. BUTTON SHEEN ---------- */
+.btn::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);
+  transform:translateX(-120%);transition:transform .7s var(--ease-out);
+}
+.btn:hover::after{transform:translateX(120%)}
+.btn.primary::after{background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%)}
+
+/* ---------- 20j. CHIP + FOOTER-LINK MICRO-INTERACTIONS ---------- */
+.signal-chips span{transition:transform var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}
+.signal-chips span:hover{transform:translateY(-2px);border-color:var(--line-signal);color:var(--text)}
+.footer-col a{position:relative}
+.footer-col a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:var(--cyan);
+  transition:right var(--dur-med) var(--ease-out);
+}
+.footer-col a:hover::after{right:0}
 
 /* ---------- 21. RESPONSIVE ---------- */
 @media(max-width:1080px){
