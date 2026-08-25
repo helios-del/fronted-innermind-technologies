@@ -1,307 +1,670 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Technology — The Emotional Operating System | Innermind Technologies</title>
-  <meta name="description" content="Inside the Emotional Operating System: how Innermind Technologies is designing an inference layer around human signals, a multidimensional psychological model, and adaptive response.">
-  <link rel="canonical" href="https://innermindtech.com/technology.html">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Technology — The Emotional Operating System | Innermind Technologies">
-  <meta property="og:description" content="An inference layer built around up to fifteen psychological dimensions — designed for adaptive, human-aware computing.">
-  <meta property="og:url" content="https://innermindtech.com/technology.html">
-  <meta property="og:image" content="assets/image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#070f1c">
-  <link rel="icon" href="assets/image.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+/* =================================================================
+   INNERMIND TECHNOLOGIES — INTERACTION LAYER
+   Vanilla JS with zero external dependencies.
+   Safe to include across all pages.
+   ================================================================= */
+(() => {
+  "use strict";
 
-  <header>
-    <nav class="nav" aria-label="Main Navigation">
-      <div class="container nav-inner">
-        <a class="brand" href="index.html">
-          <img src="assets/image.png" alt="Innermind Technologies Logo" width="38" height="38">
-          <span>INNERMIND TECHNOLOGIES</span>
-        </a>
-        <div class="nav-right">
-          <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="technology.html" class="active" aria-current="page">Technology</a>
-            <a href="about.html">About</a>
-            <a href="applications.html">Applications</a>
-            <a href="contact.html">Contact</a>
-          </div>
-          <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
-          <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span></button>
-        </div>
-      </div>
-    </nav>
-  </header>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-  <div class="mobile-panel" id="mobile-nav" aria-label="Mobile Navigation">
-    <a href="index.html">Home</a>
-    <a href="technology.html" class="active">Technology</a>
-    <a href="about.html">About</a>
-    <a href="applications.html">Applications</a>
-    <a href="contact.html">Contact</a>
-    <div class="mp-foot">contact@innermindtech.com</div>
-  </div>
+  /* ---------- Footer Dynamic Year ---------- */
+  document.querySelectorAll("[data-year]").forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
 
-  <main id="main">
-    <section class="page-hero" aria-label="Technology Introduction">
-      <div class="container">
-        <div class="eyebrow">System Architecture</div>
-        <h1>The <span class="gradient">Emotional Operating System.</span></h1>
-        <p class="lead">A proposed adaptive computational layer connecting human psychological state with intelligent applications — architected around multidimensional inference and continuous adaptation.</p>
-      </div>
-    </section>
+  /* ---------- Scroll Progress Bar ---------- */
+  {
+    const bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    document.body.appendChild(bar);
+    let ticking = false;
+    const updateBar = () => {
+      const h = document.documentElement;
+      const scrollable = h.scrollHeight - h.clientHeight;
+      const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      bar.style.width = pct + "%";
+      ticking = false;
+    };
+    updateBar();
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(updateBar);
+        ticking = true;
+      }
+    }, { passive: true });
+    window.addEventListener("resize", updateBar);
+  }
 
-    <!-- ARCHITECTURE PIPELINE -->
-    <section class="section-tight" aria-label="Inference Pipeline">
-      <div class="container">
-        <div class="section-head reveal">
-          <div class="eyebrow">Pipeline Overview</div>
-          <h2>Signals in. State inferred. Experience adapts.</h2>
-        </div>
+  /* ---------- Nav Scroll State ---------- */
+  const nav = document.querySelector(".nav");
+  if (nav) {
+    const setScrolled = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
+    setScrolled();
+    window.addEventListener("scroll", setScrolled, { passive: true });
+  }
 
-        <!-- TELEMETRY STREAM HUD -->
-        <div class="telemetry-box reveal" aria-label="Real-time Input Signal Telemetry">
-          <div class="telemetry-bar">
-            <div class="hud-indicator"><span class="pulse-dot"></span> STREAMING TELEMETRY (LIVE RECEPTOR)</div>
-            <div class="hud-stats mono">FREQ: 128Hz &nbsp;|&nbsp; LATENCY: 4.2ms &nbsp;|&nbsp; DIMENSIONS: 15 ACTIVE</div>
-          </div>
-          <div class="stream-channels">
-            <div class="stream-channel">
-              <span class="channel-name mono">CH-01: TEMPORAL_INTERVAL</span>
-              <div class="channel-wave wave-1"></div>
-            </div>
-            <div class="stream-channel">
-              <span class="channel-name mono">CH-02: ATTENTION_FLUX</span>
-              <div class="channel-wave wave-2"></div>
-            </div>
-            <div class="stream-channel">
-              <span class="channel-name mono">CH-03: COGNITIVE_FATIGUE_DELTA</span>
-              <div class="channel-wave wave-3"></div>
-            </div>
-          </div>
-        </div>
+  /* ---------- Mobile Navigation Panel ---------- */
+  const menuBtn = document.querySelector(".menu-btn");
+  const mobilePanel = document.querySelector(".mobile-panel");
+  if (menuBtn && mobilePanel) {
+    const closePanel = () => {
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open menu");
+      mobilePanel.classList.remove("is-open");
+      document.body.classList.remove("nav-open");
+    };
+    const openPanel = () => {
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "Close menu");
+      mobilePanel.classList.add("is-open");
+      document.body.classList.add("nav-open");
+    };
+    menuBtn.addEventListener("click", () => {
+      const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
+      isOpen ? closePanel() : openPanel();
+    });
+    mobilePanel.querySelectorAll("a").forEach(a => a.addEventListener("click", closePanel));
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") closePanel();
+    });
+  }
 
-        <div class="tech-diagram reveal-group">
-          <div class="tech-box reveal">
-            <small>01 · Input</small>
-            <h3>Human Signals &amp; Context</h3>
-            <p class="muted">Interaction timing, workflow pacing, and environmental context form a streaming representation of engagement.</p>
-            <div class="signal-chips">
-              <span>Interaction timing</span><span>Engagement cadence</span><span>Explicit input</span><span>Contextual clues</span>
-            </div>
-          </div>
-          <div class="tech-box main reveal">
-            <small>02 · Core</small>
-            <h3>Inference Layer</h3>
-            <p class="muted">Up to fifteen psychological dimensions form the conceptual framework for interpreting complex cognitive patterns in real time.</p>
-          </div>
-          <div class="tech-box reveal">
-            <small>03 · Output</small>
-            <h3>Adaptive Response</h3>
-            <p class="muted">Context-aware interface responses dynamically adjust cognitive load, formatting, and feedback loops.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+  /* ---------- Desktop Nav Hover Pill ---------- */
+  const navLinksWrap = document.querySelector(".nav-links");
+  if (navLinksWrap) {
+    const links = Array.from(navLinksWrap.querySelectorAll("a"));
+    const pill = document.createElement("div");
+    pill.className = "nav-pill";
+    navLinksWrap.appendChild(pill);
 
-    <!-- DIMENSIONS CONSTELLATION & SIMULATOR -->
-    <section class="band" id="dimensions" aria-label="Conceptual Dimensions Model">
-      <div class="container">
-        <div class="section-head reveal">
-          <div class="eyebrow">A Multidimensional Model</div>
-          <h2>Beyond one-dimensional personalisation.</h2>
-          <p>Human experience cannot be reduced to a single score. Innermind's architecture evaluates interdependent psychological factors concurrently.</p>
-        </div>
+    const moveTo = (el) => {
+      if (!el) { pill.style.opacity = "0"; return; }
+      pill.style.left = el.offsetLeft + "px";
+      pill.style.width = el.offsetWidth + "px";
+      pill.style.opacity = "1";
+    };
+    const restToActive = () => moveTo(navLinksWrap.querySelector("a.active"));
 
-        <!-- STATE-SPACE RADAR SIMULATOR -->
-        <div class="state-sim reveal" aria-label="Cognitive State Topology Simulator">
-          <div class="state-sim-header">
-            <div class="state-sim-title">
-              <span class="mono" style="color:var(--cyan);font-size:12px;">SIMULATION ENGINE // LIVE TOPOLOGY</span>
-              <h3 style="margin-top:6px;">Affective State Representation</h3>
-            </div>
-            <div class="state-presets" role="group" aria-label="Preset cognitive states">
-              <button class="preset-btn is-active" data-preset="flow">Focused Flow</button>
-              <button class="preset-btn" data-preset="overload">Cognitive Strain</button>
-              <button class="preset-btn" data-preset="curiosity">Exploratory</button>
-              <button class="preset-btn" data-preset="fatigue">State Fatigue</button>
-            </div>
-          </div>
+    links.forEach(link => {
+      link.addEventListener("mouseenter", () => moveTo(link));
+      link.addEventListener("focus", () => moveTo(link));
+    });
+    navLinksWrap.addEventListener("mouseleave", restToActive);
+    window.addEventListener("resize", restToActive);
+    restToActive();
+  }
 
-          <div class="state-sim-grid">
-            <div class="radar-wrap">
-              <svg class="radar-svg" viewBox="0 0 400 400" aria-hidden="true">
-                <defs>
-                  <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#4de8dc" stop-opacity="0.35"/>
-                    <stop offset="60%" stop-color="#5d8cff" stop-opacity="0.15"/>
-                    <stop offset="100%" stop-color="#9b7dff" stop-opacity="0"/>
-                  </radialGradient>
-                </defs>
-                <polygon class="radar-grid" points="200,40 338,120 338,280 200,360 62,280 62,120"/>
-                <polygon class="radar-grid" points="200,80 304,140 304,260 200,320 96,260 96,140"/>
-                <polygon class="radar-grid" points="200,120 269,160 269,240 200,280 131,240 131,160"/>
-                <polygon id="radarPolygon" class="radar-poly" points="200,60 325,130 280,265 200,315 115,245 90,135" fill="url(#radarGlow)"/>
-                <text x="200" y="28" text-anchor="middle" class="radar-lbl">Attention (01)</text>
-                <text x="350" y="125" text-anchor="start" class="radar-lbl">Arousal (02)</text>
-                <text x="350" y="285" text-anchor="start" class="radar-lbl">Cognitive Load (04)</text>
-                <text x="200" y="385" text-anchor="middle" class="radar-lbl">Stability (06)</text>
-                <text x="50" y="285" text-anchor="end" class="radar-lbl">Receptivity (14)</text>
-                <text x="50" y="125" text-anchor="end" class="radar-lbl">Valence (03)</text>
-              </svg>
-            </div>
+  /* ---------- Custom Cursor ---------- */
+  if (!isCoarsePointer && !reduceMotion && window.matchMedia("(min-width:801px)").matches) {
+    const dot = document.createElement("div");
+    dot.className = "cursor-dot";
+    const ring = document.createElement("div");
+    ring.className = "cursor-ring";
+    document.body.append(dot, ring);
+    document.documentElement.classList.add("has-custom-cursor");
 
-            <div class="state-metrics">
-              <div class="metric-row">
-                <span class="mono">VALENCE SPECTRUM</span>
-                <div class="bar-track"><div class="bar-fill" id="m-valence" style="width: 88%;"></div></div>
-              </div>
-              <div class="metric-row">
-                <span class="mono">COGNITIVE DEMAND</span>
-                <div class="bar-track"><div class="bar-fill" id="m-load" style="width: 45%;"></div></div>
-              </div>
-              <div class="metric-row">
-                <span class="mono">ENGAGEMENT CADENCE</span>
-                <div class="bar-track"><div class="bar-fill" id="m-cadence" style="width: 92%;"></div></div>
-              </div>
-              <div class="metric-row">
-                <span class="mono">NEURAL RECEPTIVITY</span>
-                <div class="bar-track"><div class="bar-fill" id="m-receptivity" style="width: 74%;"></div></div>
-              </div>
-              <p id="stateDesc" class="muted mono" style="font-size:12.5px;margin-top:16px;">State: High focus stability with balanced cognitive load and positive valence alignment.</p>
-            </div>
-          </div>
-        </div>
+    let mx = -100, my = -100, rx = -100, ry = -100;
 
-        <div class="dims">
-          <div class="constellation reveal" role="group" aria-label="Fifteen conceptual psychological dimensions — hover or focus a node to inspect details">
-            <div class="constellation-ring" aria-hidden="true">
-              <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="0.3"/>
-                <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="0.3"/>
-              </svg>
-            </div>
-            <div class="constellation-core"><span>Inferred<br>State</span></div>
-          </div>
+    window.addEventListener("pointermove", e => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
 
-          <div class="dim-panel reveal">
-            <span class="index mono" data-dim-index>01 / 15</span>
-            <h3 data-dim-name>—</h3>
-            <p data-dim-desc>—</p>
-            <span class="dim-hint">Hover, click, or tab through the radial nodes to explore each dimension.</span>
-            <p class="dims-caption">These fifteen dimensions represent an illustrative conceptual sketch of the multidimensional model Innermind is exploring, rather than a clinical diagnostic instrument.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    const tick = () => {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
 
-    <!-- THREE EXAMPLE DIMENSIONS -->
-    <section class="section-tight" aria-label="Sample Dimensions">
-      <div class="container">
-        <div class="grid reveal-group">
-          <div class="card dimension reveal"><span class="number">01</span><strong>Attention</strong><span class="muted">How focused or diffuse user engagement appears across intervals</span></div>
-          <div class="card dimension reveal"><span class="number">02</span><strong>Valence</strong><span class="muted">The broad positive-to-negative tone of an inferred cognitive state</span></div>
-          <div class="card dimension reveal"><span class="number">03</span><strong>Cognitive Load</strong><span class="muted">The degree of mental effort an interaction appears to demand</span></div>
-        </div>
-        <p class="muted" style="margin-top:26px">The complete set of fifteen dimensions is part of Innermind's ongoing exploratory research.</p>
-      </div>
-    </section>
+    const interactiveSelector = "a, button, input, textarea, .dim-node, [data-cursor]";
+    document.addEventListener("mouseover", e => {
+      if (e.target.closest && e.target.closest(interactiveSelector)) {
+        ring.classList.add("is-active");
+      }
+    });
+    document.addEventListener("mouseout", e => {
+      if (e.target.closest && e.target.closest(interactiveSelector)) {
+        ring.classList.remove("is-active");
+      }
+    });
+  }
 
-    <!-- ARCHITECTURAL PRINCIPLES -->
-    <section class="band section-tight" aria-label="System Principles">
-      <div class="container">
-        <div class="section-head reveal">
-          <div class="eyebrow">Design Principles</div>
-          <h2>How the architecture is built.</h2>
-        </div>
-        <div class="grid reveal-group">
-          <div class="card reveal"><span class="number">STREAMING</span><h3>Continuous Adaptation</h3><p>Conceived to update as context and inferred states evolve over the course of an active session.</p></div>
-          <div class="card reveal"><span class="number">MULTIVARIATE</span><h3>No Single Score</h3><p>Multiple dimensions are weighted together to prevent reductionist, one-size-fits-all adaptation.</p></div>
-          <div class="card reveal"><span class="number">ETHICAL</span><h3>Human-Centred Limits</h3><p>Designed with strict computational boundaries prioritizing human dignity and user control.</p></div>
-        </div>
-      </div>
-    </section>
+  /* ---------- Magnetic Button Physics ---------- */
+  if (!isCoarsePointer && !reduceMotion) {
+    document.querySelectorAll(".btn").forEach(btn => {
+      btn.addEventListener("mousemove", e => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = `translate(${x * 0.22}px, ${y * 0.32}px)`;
+      });
+      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
+    });
+  }
 
-    <!-- CTA -->
-    <section aria-label="Applications Link">
-      <div class="container">
-        <div class="cta-band reveal">
-          <div class="eyebrow" style="justify-content:center">See It In Context</div>
-          <h2 style="margin-top:18px">Explore where this architecture could apply.</h2>
-          <div class="buttons">
-            <a class="btn primary" href="applications.html">View applications
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+  /* ---------- Spotlight & 3D Tilt Surfaces ---------- */
+  if (!isCoarsePointer && !reduceMotion) {
+    const tiltTargets = document.querySelectorAll(".card, .tech-box, .explorer-tab, .cta-band, .state-sim");
+    const glowOnlyTargets = document.querySelectorAll(".eos-stage, .telemetry-box");
 
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-brand">
-            <img src="assets/image.png" alt="Innermind Technologies Logo" width="34" height="34">
-            <span>INNERMIND TECHNOLOGIES</span>
-          </div>
-          <p class="footer-blurb">Architecting deep cognition — an adaptive layer designed to help technology understand changing human cognitive and emotional states.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Site</h4>
-          <a href="index.html">Home</a>
-          <a href="technology.html">Technology</a>
-          <a href="about.html">About</a>
-          <a href="applications.html">Applications</a>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <a href="about.html">Mission &amp; Vision</a>
-          <a href="applications.html">Applications</a>
-          <a href="contact.html">Contact</a>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <a href="mailto:contact@innermindtech.com">contact@innermindtech.com</a>
-          <a href="contact.html">Enquiry Form</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span data-year></span> Innermind Technologies Private Limited. All rights reserved.</span>
-        <span>Architecting Deep Cognition.</span>
-      </div>
-    </div>
-  </footer>
+    const attachSpotlight = (el, allowTilt) => {
+      el.classList.add("has-spotlight");
+      if (allowTilt) el.classList.add("has-tilt");
+      const glow = document.createElement("div");
+      glow.className = "spot-glow";
+      glow.setAttribute("aria-hidden", "true");
+      el.prepend(glow);
 
-  <script>
-    window.INNERMIND_DIMENSIONS = [
-      { name: "Attention", desc: "How focused or diffuse a person's engagement appears to be in the moment." },
-      { name: "Arousal", desc: "The intensity of activation behind an interaction, from calm to keyed-up." },
-      { name: "Valence", desc: "The general positive-to-negative emotional tone of an inferred state." },
-      { name: "Cognitive Load", desc: "How much mental effort a given moment of interaction seems to demand." },
-      { name: "Stress", desc: "Signs of pressure or strain appearing across how someone is engaging." },
-      { name: "Focus Stability", desc: "How consistently attention holds versus drifts over a session." },
-      { name: "Motivation", desc: "The apparent drive behind continuing, pausing, or concluding an activity." },
-      { name: "Curiosity", desc: "Openness to exploring something new, unfamiliar, or unprompted." },
-      { name: "Fatigue", desc: "Accumulated signs of tiredness building across an extended session." },
-      { name: "Confidence", desc: "How decisive or hesitant interaction patterns appear to be." },
-      { name: "Social Orientation", desc: "A tendency toward collaborative interaction versus solitary focus." },
-      { name: "Novelty Response", desc: "How someone responds when encountering unexpected information or stimuli." },
-      { name: "Emotional Stability", desc: "How steady or fluctuating an inferred state appears over time." },
-      { name: "Receptivity", desc: "Openness to suggestions, prompts, or changes in workflow in a given moment." },
-      { name: "Flow", desc: "The sense of absorbed, low-friction engagement in a task." }
-    ];
-  </script>
-  <script src="script.js" defer></script>
-</body>
-</html>
+      el.addEventListener("pointermove", e => {
+        const r = el.getBoundingClientRect();
+        const px = ((e.clientX - r.left) / r.width) * 100;
+        const py = ((e.clientY - r.top) / r.height) * 100;
+        glow.style.setProperty("--sx", px + "%");
+        glow.style.setProperty("--sy", py + "%");
+        if (allowTilt) {
+          const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -6;
+          const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 6;
+          el.style.setProperty("--tilt-x", rx.toFixed(2) + "deg");
+          el.style.setProperty("--tilt-y", ry.toFixed(2) + "deg");
+        }
+      });
+      el.addEventListener("pointerleave", () => {
+        el.style.removeProperty("--tilt-x");
+        el.style.removeProperty("--tilt-y");
+      });
+    };
+
+    tiltTargets.forEach(el => attachSpotlight(el, true));
+    glowOnlyTargets.forEach(el => attachSpotlight(el, false));
+  }
+
+  /* ---------- Word-by-Word Reveal Stagger ---------- */
+  const splitIntoWords = (root) => {
+    let wordIndex = 0;
+    const GRADIENT_CLASSES = ["gradient", "gradient-warm"];
+    const walk = (node, inheritedGradient) => {
+      Array.from(node.childNodes).forEach(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          const text = child.textContent;
+          if (!text || !text.trim()) return;
+          const frag = document.createDocumentFragment();
+          text.split(/(\s+)/).forEach(part => {
+            if (part === "") return;
+            if (/^\s+$/.test(part)) {
+              frag.appendChild(document.createTextNode(part));
+            } else {
+              const span = document.createElement("span");
+              span.className = inheritedGradient ? `word ${inheritedGradient}` : "word";
+              span.style.setProperty("--stagger", (wordIndex * 0.035) + "s");
+              span.textContent = part;
+              wordIndex += 1;
+              frag.appendChild(span);
+            }
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+          let grad = inheritedGradient;
+          GRADIENT_CLASSES.forEach(gc => { if (child.classList.contains(gc)) grad = gc; });
+          walk(child, grad);
+        }
+      });
+    };
+    walk(root, null);
+  };
+
+  if (!reduceMotion) {
+    document.querySelectorAll(".hero-inner h1, .page-hero h1, .quote").forEach(el => {
+      el.classList.remove("reveal");
+      el.classList.add("split-reveal");
+      splitIntoWords(el);
+    });
+  }
+
+  /* ---------- Auto-tag Reveal Groups ---------- */
+  document.querySelectorAll(".hero-inner, .page-hero .container").forEach(container => {
+    container.classList.add("reveal-group");
+    Array.from(container.children).forEach(child => {
+      if (!child.classList.contains("split-reveal")) child.classList.add("reveal");
+    });
+  });
+  document.querySelectorAll("footer .footer-grid, footer .footer-bottom").forEach(el => {
+    el.classList.add("reveal");
+  });
+
+  /* ---------- Scroll Reveal Observer ---------- */
+  const revealEls = document.querySelectorAll(".reveal, .split-reveal");
+  if (revealEls.length) {
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      revealEls.forEach(el => el.classList.add("is-visible"));
+    } else {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: "0px 0px -40px 0px" });
+      revealEls.forEach(el => io.observe(el));
+    }
+  }
+
+  /* ---------- Multi-Instance Cognitive Field (Canvas) ---------- */
+  const fieldWraps = document.querySelectorAll(".hero-field");
+  if (fieldWraps.length) {
+    const COLORS = ["77,232,220", "93,140,255", "155,125,255"];
+
+    fieldWraps.forEach(fieldWrap => {
+      const canvas = document.createElement("canvas");
+      fieldWrap.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+      let w, h, dpr;
+      let points = [];
+      let raf = null;
+      let running = false;
+      const pointer = { x: -9999, y: -9999, active: false };
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = fieldWrap.clientWidth || fieldWrap.offsetWidth || 300;
+        h = fieldWrap.clientHeight || fieldWrap.offsetHeight || 200;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const density = Math.max(24, Math.min(75, Math.floor((w * h) / 22000)));
+        points = Array.from({ length: density }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          r: Math.random() * 1.4 + 0.6,
+          c: COLORS[Math.floor(Math.random() * COLORS.length)],
+        }));
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, w, h);
+        const linkDist = Math.min(140, w * 0.18);
+
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < -20) p.x = w + 20;
+          if (p.x > w + 20) p.x = -20;
+          if (p.y < -20) p.y = h + 20;
+          if (p.y > h + 20) p.y = -20;
+
+          if (pointer.active) {
+            const dx = p.x - pointer.x, dy = p.y - pointer.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < 26000) {
+              const d = Math.sqrt(d2) || 1;
+              p.x += (dx / d) * 0.25;
+              p.y += (dy / d) * 0.25;
+            }
+          }
+        }
+
+        for (let i = 0; i < points.length; i++) {
+          for (let j = i + 1; j < points.length; j++) {
+            const a = points[i], b = points[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < linkDist) {
+              const alpha = (1 - dist / linkDist) * 0.22;
+              ctx.strokeStyle = `rgba(${a.c},${alpha})`;
+              ctx.lineWidth = 0.6;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        if (pointer.active) {
+          for (let i = 0; i < points.length; i++) {
+            const p = points[i];
+            const dx = p.x - pointer.x, dy = p.y - pointer.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+              const alpha = (1 - dist / 160) * 0.35;
+              ctx.strokeStyle = `rgba(77,232,220,${alpha})`;
+              ctx.lineWidth = 0.7;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(pointer.x, pointer.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${p.c},.85)`;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        if (running) raf = requestAnimationFrame(step);
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        raf = requestAnimationFrame(step);
+      }
+      function stop() {
+        running = false;
+        if (raf) cancelAnimationFrame(raf);
+      }
+
+      resize();
+      if (reduceMotion) {
+        step();
+      } else {
+        start();
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(resize, 160);
+        });
+
+        const parentHost = fieldWrap.parentElement || fieldWrap;
+        parentHost.addEventListener("pointermove", e => {
+          const r = fieldWrap.getBoundingClientRect();
+          pointer.x = e.clientX - r.left;
+          pointer.y = e.clientY - r.top;
+          pointer.active = true;
+        });
+        parentHost.addEventListener("pointerleave", () => { pointer.active = false; });
+
+        if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => (entry.isIntersecting ? start() : stop()));
+          }, { threshold: 0 });
+          io.observe(fieldWrap);
+        }
+        document.addEventListener("visibilitychange", () => {
+          document.hidden ? stop() : start();
+        });
+      }
+    });
+  }
+
+  /* ---------- EOS Flow Architecture Diagram ---------- */
+  const eosDiagram = document.querySelector(".eos-diagram");
+  if (eosDiagram) {
+    let svgRoot = null;
+    eosDiagram.querySelectorAll(".eos-path-solid").forEach(path => {
+      const len = path.getTotalLength ? path.getTotalLength() : 1000;
+      path.style.setProperty("--len", len);
+      svgRoot = path.ownerSVGElement;
+
+      if (!reduceMotion && svgRoot) {
+        const svgNS = "http://www.w3.org/2000/svg";
+        const pathId = "eosFlowPath";
+        path.setAttribute("id", pathId);
+        [0, 0.5].forEach((phase, idx) => {
+          const dot = document.createElementNS(svgNS, "circle");
+          dot.setAttribute("r", "3.4");
+          dot.setAttribute("fill", idx === 0 ? "#4de8dc" : "#9b7dff");
+          dot.setAttribute("opacity", "0.9");
+          const motion = document.createElementNS(svgNS, "animateMotion");
+          motion.setAttribute("dur", "4.2s");
+          motion.setAttribute("repeatCount", "indefinite");
+          motion.setAttribute("begin", (phase * 4.2) + "s");
+          motion.setAttribute("rotate", "auto");
+          const mpath = document.createElementNS(svgNS, "mpath");
+          mpath.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#" + pathId);
+          motion.appendChild(mpath);
+          dot.appendChild(motion);
+          svgRoot.appendChild(dot);
+        });
+        if (svgRoot.pauseAnimations) svgRoot.pauseAnimations();
+      }
+    });
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      eosDiagram.classList.add("is-visible");
+    } else {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            eosDiagram.classList.add("is-visible");
+            if (svgRoot && svgRoot.unpauseAnimations) svgRoot.unpauseAnimations();
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.28 });
+      io.observe(eosDiagram);
+    }
+  }
+
+  /* ---------- Dimensions Constellation Visualizer ---------- */
+  const constellation = document.querySelector(".constellation");
+  if (constellation) {
+    const nodesData = window.INNERMIND_DIMENSIONS || [];
+    const ring = constellation.querySelector(".constellation-ring");
+    const core = constellation.querySelector(".constellation-core");
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const connectorSvg = document.createElementNS(svgNS, "svg");
+    connectorSvg.setAttribute("viewBox", "0 0 100 100");
+    connectorSvg.setAttribute("class", "constellation-connector");
+    connectorSvg.setAttribute("aria-hidden", "true");
+    const connectorLine = document.createElementNS(svgNS, "line");
+    connectorLine.setAttribute("x1", "50");
+    connectorLine.setAttribute("y1", "50");
+    connectorLine.setAttribute("x2", "50");
+    connectorLine.setAttribute("y2", "50");
+    connectorLine.setAttribute("stroke", "#4de8dc");
+    connectorLine.setAttribute("stroke-width", "0.35");
+    connectorLine.setAttribute("opacity", "0.65");
+    connectorSvg.appendChild(connectorLine);
+    if (core) core.insertAdjacentElement("afterend", connectorSvg);
+
+    const nodesLayer = document.createElement("div");
+    nodesLayer.className = "constellation-nodes";
+    nodesLayer.style.position = "absolute";
+    nodesLayer.style.inset = "0";
+    constellation.appendChild(nodesLayer);
+
+    const panelIndex = document.querySelector("[data-dim-index]");
+    const panelName = document.querySelector("[data-dim-name]");
+    const panelDesc = document.querySelector("[data-dim-desc]");
+    const panelFields = [panelIndex, panelName, panelDesc].filter(Boolean);
+    const positions = [];
+
+    const applyContent = (i) => {
+      const d = nodesData[i];
+      if (!d) return;
+      if (panelIndex) panelIndex.textContent = `${String(i + 1).padStart(2, "0")} / ${String(nodesData.length).padStart(2, "0")}`;
+      if (panelName) panelName.textContent = d.name;
+      if (panelDesc) panelDesc.textContent = d.desc;
+    };
+
+    const setActive = (i) => {
+      nodesLayer.querySelectorAll(".dim-node").forEach(n => n.classList.remove("is-active"));
+      const node = nodesLayer.querySelector(`[data-i="${i}"]`);
+      if (node) node.classList.add("is-active");
+
+      const pos = positions[i];
+      if (pos) {
+        connectorLine.setAttribute("x2", pos.x.toFixed(2));
+        connectorLine.setAttribute("y2", pos.y.toFixed(2));
+      }
+
+      if (reduceMotion || !panelFields.length) {
+        applyContent(i);
+      } else {
+        panelFields.forEach(el => { el.style.opacity = "0"; });
+        setTimeout(() => {
+          applyContent(i);
+          panelFields.forEach(el => { el.style.opacity = "1"; });
+        }, 140);
+      }
+    };
+
+    const total = nodesData.length;
+    const R = 46;
+    nodesData.forEach((d, i) => {
+      const angle = (i / total) * Math.PI * 2 - Math.PI / 2;
+      const x = 50 + R * Math.cos(angle);
+      const y = 50 + R * Math.sin(angle);
+      positions.push({ x, y });
+      const btn = document.createElement("button");
+      btn.className = "dim-node";
+      btn.type = "button";
+      btn.style.setProperty("--x", x + "%");
+      btn.style.setProperty("--y", y + "%");
+      btn.dataset.i = i;
+      btn.setAttribute("aria-label", d.name);
+      btn.addEventListener("mouseenter", () => setActive(i));
+      btn.addEventListener("focus", () => setActive(i));
+      btn.addEventListener("click", () => setActive(i));
+      nodesLayer.appendChild(btn);
+    });
+
+    if (total) setActive(0);
+
+    if (ring) {
+      constellation.addEventListener("mouseenter", () => { ring.style.animationPlayState = "paused"; });
+      constellation.addEventListener("mouseleave", () => { ring.style.animationPlayState = "running"; });
+      constellation.addEventListener("focusin", () => { ring.style.animationPlayState = "paused"; });
+      constellation.addEventListener("focusout", () => { ring.style.animationPlayState = "running"; });
+    }
+  }
+
+  /* ---------- Applications Explorer Tabs ---------- */
+  const explorer = document.querySelector(".explorer");
+  if (explorer) {
+    const tabsWrap = explorer.querySelector(".explorer-tabs");
+    const tabs = Array.from(explorer.querySelectorAll(".explorer-tab"));
+    const panels = explorer.querySelectorAll(".explorer-panel");
+
+    const indicator = document.createElement("div");
+    indicator.className = "explorer-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    if (tabsWrap) tabsWrap.prepend(indicator);
+
+    const moveIndicator = (tab) => {
+      if (!indicator || !tab) return;
+      const horizontal = window.matchMedia("(max-width:1080px)").matches;
+      if (horizontal) {
+        indicator.style.height = "100%";
+        indicator.style.width = tab.offsetWidth + "px";
+        indicator.style.transform = `translateX(${tab.offsetLeft}px)`;
+      } else {
+        indicator.style.width = "100%";
+        indicator.style.height = tab.offsetHeight + "px";
+        indicator.style.transform = `translateY(${tab.offsetTop}px)`;
+      }
+    };
+
+    const activate = (tab) => {
+      const target = tab.getAttribute("data-target");
+      tabs.forEach(t => {
+        t.classList.toggle("is-active", t === tab);
+        t.setAttribute("aria-selected", t === tab ? "true" : "false");
+        t.tabIndex = t === tab ? 0 : -1;
+      });
+      panels.forEach(p => p.classList.toggle("is-active", p.id === target));
+      moveIndicator(tab);
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => activate(tab));
+      tab.addEventListener("keydown", e => {
+        const horizontal = window.matchMedia("(max-width:1080px)").matches;
+        const nextKey = horizontal ? "ArrowRight" : "ArrowDown";
+        const prevKey = horizontal ? "ArrowLeft" : "ArrowUp";
+        let target = null;
+        if (e.key === nextKey) target = tabs[(i + 1) % tabs.length];
+        if (e.key === prevKey) target = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (target) {
+          e.preventDefault();
+          target.focus();
+          activate(target);
+        }
+      });
+    });
+
+    const initialTab = tabs.find(t => t.classList.contains("is-active")) || tabs[0];
+    requestAnimationFrame(() => moveIndicator(initialTab));
+    window.addEventListener("resize", () => moveIndicator(explorer.querySelector(".explorer-tab.is-active") || initialTab));
+  }
+
+  /* ---------- Cognitive State Topology Simulator ---------- */
+  const stateSim = document.querySelector(".state-sim");
+  if (stateSim) {
+    const poly = document.getElementById("radarPolygon");
+    const desc = document.getElementById("stateDesc");
+    const mValence = document.getElementById("m-valence");
+    const mLoad = document.getElementById("m-load");
+    const mCadence = document.getElementById("m-cadence");
+    const mReceptivity = document.getElementById("m-receptivity");
+
+    const PRESETS = {
+      flow: {
+        points: "200,60 325,130 280,265 200,315 115,245 90,135",
+        valence: "88%",
+        load: "45%",
+        cadence: "92%",
+        receptivity: "74%",
+        desc: "State: High focus stability with balanced cognitive load and positive valence alignment."
+      },
+      overload: {
+        points: "200,110 340,110 330,310 200,240 75,270 120,165",
+        valence: "24%",
+        load: "94%",
+        cadence: "40%",
+        receptivity: "31%",
+        desc: "State: Elevated cognitive strain with fragmented focus stability and elevated fatigue delta."
+      },
+      curiosity: {
+        points: "200,50 295,145 260,250 200,340 140,255 70,110",
+        valence: "92%",
+        load: "58%",
+        cadence: "78%",
+        receptivity: "96%",
+        desc: "State: High receptivity to novel inputs with exploratory pacing and low friction."
+      },
+      fatigue: {
+        points: "200,140 250,160 270,230 200,260 135,230 145,160",
+        valence: "42%",
+        load: "76%",
+        cadence: "22%",
+        receptivity: "38%",
+        desc: "State: Attenuated attentional band with slowed response cadence and high latency."
+      }
+    };
+
+    const presetBtns = stateSim.querySelectorAll(".preset-btn");
+    presetBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        presetBtns.forEach(b => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+
+        const data = PRESETS[btn.dataset.preset];
+        if (!data) return;
+
+        if (poly) poly.setAttribute("points", data.points);
+        if (mValence) mValence.style.width = data.valence;
+        if (mLoad) mLoad.style.width = data.load;
+        if (mCadence) mCadence.style.width = data.cadence;
+        if (mReceptivity) mReceptivity.style.width = data.receptivity;
+        if (desc) desc.textContent = data.desc;
+      });
+    });
+  }
+})();
