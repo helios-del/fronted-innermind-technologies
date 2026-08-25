@@ -12,36 +12,35 @@
   <meta property="og:url" content="https://innermindtech.com/applications.html">
   <meta property="og:image" content="assets/image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#060d19">
+  <meta name="theme-color" content="#070f1c">
   <link rel="icon" href="assets/image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav class="nav" aria-label="Main Navigation">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html" aria-label="Innermind Technologies Homepage">
-        <img src="assets/image.png" alt="Innermind Technologies emblem" width="36" height="36">
-        <span>INNERMIND TECHNOLOGIES</span>
-      </a>
-      <div class="nav-right">
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="technology.html">Technology</a>
-          <a href="about.html">About</a>
-          <a href="applications.html" class="active" aria-current="page">Applications</a>
-          <a href="contact.html">Contact</a>
+  <header>
+    <nav class="nav" aria-label="Main Navigation">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/image.png" alt="Innermind Technologies Logo" width="38" height="38">
+          <span>INNERMIND TECHNOLOGIES</span>
+        </a>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="technology.html">Technology</a>
+            <a href="about.html">About</a>
+            <a href="applications.html" class="active" aria-current="page">Applications</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
+          <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span></button>
         </div>
-        <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
-        <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span>
-        </button>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
   <div class="mobile-panel" id="mobile-nav" aria-label="Mobile Navigation">
     <a href="index.html">Home</a>
@@ -53,135 +52,125 @@
   </div>
 
   <main id="main">
-
-    <section class="page-hero">
+    <section class="page-hero" aria-label="Applications Introduction">
       <div class="container">
-        <div class="eyebrow">Applied Horizons</div>
-        <h1>From inference to <span class="gradient">realized impact.</span></h1>
-        <p class="lead">The Emotional Operating System is architected as an infrastructure layer capable of supporting diverse state-aware computational applications.</p>
+        <div class="eyebrow">Domains &amp; Impact</div>
+        <h1>From inference to <span class="gradient">impact.</span></h1>
+        <p class="lead">The Emotional Operating System is conceived as foundational infrastructure capable of empowering diverse human-centred environments. Select a category below to explore its applications.</p>
       </div>
     </section>
 
-    <!-- INTERACTIVE EXPLORER -->
-    <section class="section-tight">
+    <!-- APPLICATION EXPLORER TABS -->
+    <section class="section-tight" aria-label="Application Explorer">
       <div class="container">
-        <h2 class="sr-only">Application Domain Explorer</h2>
-
         <div class="explorer reveal">
           <div class="explorer-tabs" role="tablist" aria-label="Application categories">
             <button class="explorer-tab is-active" role="tab" aria-selected="true" aria-controls="panel-health" id="tab-health" data-target="panel-health" tabindex="0">
-              <span class="idx mono">DOMAIN 01</span>
-              <span class="name">Mental &amp; Cognitive Health</span>
+              <span class="idx mono">01</span><span class="name">Mental &amp; Cognitive Health</span>
             </button>
             <button class="explorer-tab" role="tab" aria-selected="false" aria-controls="panel-personal" id="tab-personal" data-target="panel-personal" tabindex="-1">
-              <span class="idx mono">DOMAIN 02</span>
-              <span class="name">Adaptive Digital Interfaces</span>
+              <span class="idx mono">02</span><span class="name">Personalised Experiences</span>
             </button>
             <button class="explorer-tab" role="tab" aria-selected="false" aria-controls="panel-hai" id="tab-hai" data-target="panel-hai" tabindex="-1">
-              <span class="idx mono">DOMAIN 03</span>
-              <span class="name">Human–AI Collaboration</span>
+              <span class="idx mono">03</span><span class="name">Human–AI Interaction</span>
             </button>
             <button class="explorer-tab" role="tab" aria-selected="false" aria-controls="panel-future" id="tab-future" data-target="panel-future" tabindex="-1">
-              <span class="idx mono">DOMAIN 04</span>
-              <span class="name">Intelligent Environments</span>
+              <span class="idx mono">04</span><span class="name">Future Intelligent Systems</span>
             </button>
           </div>
 
           <div class="explorer-panels">
-
             <!-- PANEL 01 -->
             <div class="explorer-panel is-active" id="panel-health" role="tabpanel" aria-labelledby="tab-health">
               <svg class="explorer-motif" viewBox="0 0 280 140" aria-hidden="true">
-                <circle cx="70" cy="70" r="9" fill="#ffb672"/>
-                <circle cx="70" cy="70" r="28" fill="none" stroke="#ffb672" stroke-width="1.2" opacity=".5"/>
-                <circle cx="70" cy="70" r="48" fill="none" stroke="#4de8dc" stroke-width="1.2" opacity=".35"/>
-                <circle cx="70" cy="70" r="66" fill="none" stroke="#5d8cff" stroke-width="1" opacity=".2"/>
-                <path d="M150,70 C190,20 240,120 270,70" fill="none" stroke="#9b7dff" stroke-width="1.4" opacity=".5"/>
+                <circle cx="70" cy="70" r="8" fill="#ffb672"/>
+                <circle cx="70" cy="70" r="26" fill="none" stroke="#ffb672" stroke-width="1" opacity=".5"/>
+                <circle cx="70" cy="70" r="44" fill="none" stroke="#4de8dc" stroke-width="1" opacity=".35"/>
+                <circle cx="70" cy="70" r="62" fill="none" stroke="#5d8cff" stroke-width="1" opacity=".2"/>
+                <path d="M150,70 C190,20 240,120 270,70" fill="none" stroke="#9b7dff" stroke-width="1" opacity=".4"/>
               </svg>
               <h3>Mental &amp; Cognitive Health</h3>
-              <p>Technology engineered to perceive gradual shifts in cognitive workload and fatigue, providing non-invasive support frameworks for health practitioners and individuals.</p>
+              <p>Interfaces that recognize shifts in cognitive load, attention, and stress to provide supportive, non-intrusive accommodations.</p>
               <ul class="explorer-list">
-                <li>Detects longitudinal variance in cognitive strain rather than isolated data points</li>
-                <li>Conceived as supportive telemetry for clinical specialists, never automated diagnosis</li>
-                <li>Operates with session-level contextual privacy preservation by design</li>
+                <li>Designed to recognize state trajectories rather than static discrete data points</li>
+                <li>Conceived to assist and enrich — never replace — qualified professional care</li>
+                <li>Built around dynamic session context rather than generic clinical averages</li>
               </ul>
             </div>
 
             <!-- PANEL 02 -->
             <div class="explorer-panel" id="panel-personal" role="tabpanel" aria-labelledby="tab-personal">
               <svg class="explorer-motif" viewBox="0 0 280 140" aria-hidden="true">
-                <path d="M20,70 L100,70" stroke="#4de8dc" stroke-width="1.5"/>
+                <path d="M20,70 L100,70" stroke="#4de8dc" stroke-width="1.4"/>
                 <path d="M100,70 L180,30" stroke="#5d8cff" stroke-width="1.2" opacity=".8"/>
                 <path d="M100,70 L180,70" stroke="#5d8cff" stroke-width="1.2" opacity=".8"/>
                 <path d="M100,70 L180,110" stroke="#5d8cff" stroke-width="1.2" opacity=".8"/>
-                <path d="M180,30 L260,60" stroke="#9b7dff" stroke-width="1.2" opacity=".6"/>
-                <path d="M180,110 L260,80" stroke="#9b7dff" stroke-width="1.2" opacity=".6"/>
+                <path d="M180,30 L260,60" stroke="#9b7dff" stroke-width="1" opacity=".6"/>
+                <path d="M180,110 L260,80" stroke="#9b7dff" stroke-width="1" opacity=".6"/>
                 <circle cx="20" cy="70" r="4" fill="#ffb672"/>
                 <circle cx="100" cy="70" r="4" fill="#4de8dc"/>
                 <circle cx="180" cy="30" r="3" fill="#5d8cff"/><circle cx="180" cy="70" r="3" fill="#5d8cff"/><circle cx="180" cy="110" r="3" fill="#5d8cff"/>
-                <circle cx="260" cy="60" r="3.5" fill="#9b7dff"/><circle cx="260" cy="80" r="3.5" fill="#9b7dff"/>
+                <circle cx="260" cy="60" r="3" fill="#9b7dff"/><circle cx="260" cy="80" r="3" fill="#9b7dff"/>
               </svg>
-              <h3>Adaptive Digital Interfaces</h3>
-              <p>Digital environments that adjust layout complexity, notification density, and pacing in direct response to the user's inferred cognitive capacity.</p>
+              <h3>Personalised Digital Experiences</h3>
+              <p>Adaptive software that tailors its presentation, density, and cadence according to real-time inferred psychological readiness.</p>
               <ul class="explorer-list">
-                <li>Dynamically shifts information density based on working memory load</li>
-                <li>Modulates pacing and task branching when decision fatigue is detected</li>
-                <li>Treats personalization as a continuous, ambient adaptation rather than a static survey</li>
+                <li>Branches dynamically according to user state rather than static predetermined rules</li>
+                <li>Adjusts tone, pacing, and information complexity as fatigue or focus shifts</li>
+                <li>Treats personalisation as a continuous dialogue rather than a one-off profile setting</li>
               </ul>
             </div>
 
             <!-- PANEL 03 -->
             <div class="explorer-panel" id="panel-hai" role="tabpanel" aria-labelledby="tab-hai">
               <svg class="explorer-motif" viewBox="0 0 280 140" aria-hidden="true">
-                <circle cx="90" cy="70" r="38" fill="none" stroke="#4de8dc" stroke-width="1.2" opacity=".6"/>
-                <circle cx="190" cy="70" r="38" fill="none" stroke="#9b7dff" stroke-width="1.2" opacity=".6"/>
+                <circle cx="90" cy="70" r="38" fill="none" stroke="#4de8dc" stroke-width="1" opacity=".6"/>
+                <circle cx="190" cy="70" r="38" fill="none" stroke="#9b7dff" stroke-width="1" opacity=".6"/>
                 <circle cx="90" cy="70" r="5" fill="#4de8dc"/>
                 <circle cx="190" cy="70" r="5" fill="#9b7dff"/>
-                <path d="M118,58 C135,48 145,48 162,58" fill="none" stroke="#5d8cff" stroke-width="1.4"/>
-                <path d="M118,82 C135,92 145,92 162,82" fill="none" stroke="#5d8cff" stroke-width="1.4" opacity=".7"/>
+                <path d="M118,58 C135,50 145,50 162,58" fill="none" stroke="#5d8cff" stroke-width="1.2"/>
+                <path d="M118,82 C135,90 145,90 162,82" fill="none" stroke="#5d8cff" stroke-width="1.2" opacity=".7"/>
               </svg>
-              <h3>Human–AI Collaboration</h3>
-              <p>Next-generation generative and conversational AI systems equipped with real-time awareness of user emotional tone, hesitation, and comprehension.</p>
+              <h3>Human–AI Interaction</h3>
+              <p>Enabling conversational agents and collaborative tools to maintain cognitive awareness across multi-turn workflows.</p>
               <ul class="explorer-list">
-                <li>Preserves multi-turn state context across complex problem-solving sessions</li>
-                <li>Modulates AI conciseness, explanation depth, and tone to match cognitive state</li>
-                <li>Transforms one-way prompting into empathetic, two-way cooperative intelligence</li>
+                <li>Maintains state continuity across complex problem-solving sessions</li>
+                <li>Adapts explanation granularity and collaboration style based on user receptivity</li>
+                <li>Operates on bidirectional context rather than isolated, transactional prompts</li>
               </ul>
             </div>
 
             <!-- PANEL 04 -->
             <div class="explorer-panel" id="panel-future" role="tabpanel" aria-labelledby="tab-future">
               <svg class="explorer-motif" viewBox="0 0 280 140" aria-hidden="true">
-                <rect x="30" y="90" width="220" height="1.5" fill="#ffb672" opacity=".5"/>
-                <rect x="45" y="65" width="190" height="1.5" fill="#4de8dc" opacity=".6"/>
-                <rect x="60" y="40" width="160" height="1.5" fill="#5d8cff" opacity=".7"/>
-                <rect x="80" y="16" width="120" height="1.5" fill="#9b7dff" opacity=".8"/>
-                <circle cx="140" cy="90" r="3.5" fill="#ffb672"/>
-                <circle cx="140" cy="65" r="3.5" fill="#4de8dc"/>
-                <circle cx="140" cy="40" r="3.5" fill="#5d8cff"/>
-                <circle cx="140" cy="16" r="3.5" fill="#9b7dff"/>
+                <rect x="30" y="90" width="220" height="1" fill="#ffb672" opacity=".5"/>
+                <rect x="45" y="65" width="190" height="1" fill="#4de8dc" opacity=".6"/>
+                <rect x="60" y="40" width="160" height="1" fill="#5d8cff" opacity=".7"/>
+                <rect x="80" y="16" width="120" height="1" fill="#9b7dff" opacity=".8"/>
+                <circle cx="140" cy="90" r="3" fill="#ffb672"/>
+                <circle cx="140" cy="65" r="3" fill="#4de8dc"/>
+                <circle cx="140" cy="40" r="3" fill="#5d8cff"/>
+                <circle cx="140" cy="16" r="3" fill="#9b7dff"/>
               </svg>
-              <h3>Intelligent Environments</h3>
-              <p>Ambient computing systems for smart spaces and specialized workspaces capable of tuning sensory feedback and lighting to support peak flow.</p>
+              <h3>Future Intelligent Systems</h3>
+              <p>A unified infrastructure enabling next-generation operating systems and spatial computing environments to understand human state.</p>
               <ul class="explorer-list">
-                <li>Architected as an interoperable middleware API for IoT and smart hardware</li>
-                <li>Generalizes across consumer devices, research labs, and mission-critical workflows</li>
-                <li>Engineered with open extensible protocols for privacy-conscious developers</li>
+                <li>Conceived as horizontal infrastructure on which diverse specialized systems can build</li>
+                <li>Engineered to generalize across operating environments without bespoke retraining</li>
+                <li>Maintained with ongoing exploration into multi-modal state synthesis</li>
               </ul>
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- CALL TO ACTION -->
-    <section>
+    <!-- CTA -->
+    <section aria-label="Use Case Inquiry">
       <div class="container">
         <div class="cta-band reveal">
-          <div class="eyebrow" style="justify-content:center;">Explore Joint Development</div>
-          <h2 style="margin-top: 18px;">Have a specialized domain or deployment in mind?</h2>
+          <div class="eyebrow" style="justify-content:center">Have a Use Case in Mind?</div>
+          <h2 style="margin-top:18px">Let's talk about where this could fit.</h2>
           <div class="buttons">
             <a class="btn primary" href="contact.html">Talk to Innermind
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
@@ -190,7 +179,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -198,29 +186,28 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand">
-            <img src="assets/image.png" alt="Innermind Technologies emblem" width="32" height="32">
+            <img src="assets/image.png" alt="Innermind Technologies Logo" width="34" height="34">
             <span>INNERMIND TECHNOLOGIES</span>
           </div>
-          <p class="footer-blurb">Architecting deep cognition — an adaptive computational layer designed to understand changing human cognitive and emotional states.</p>
+          <p class="footer-blurb">Architecting deep cognition — an adaptive layer designed to help technology understand changing human cognitive and emotional states.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4>Site</h4>
           <a href="index.html">Home</a>
           <a href="technology.html">Technology</a>
           <a href="about.html">About</a>
           <a href="applications.html">Applications</a>
         </div>
         <div class="footer-col">
-          <h4>Research</h4>
-          <a href="technology.html#dimensions">15 Dimensions</a>
-          <a href="about.html">Research Philosophy</a>
-          <a href="applications.html">Impact Vectors</a>
-          <a href="contact.html">Partnerships</a>
+          <h4>Company</h4>
+          <a href="about.html">Mission &amp; Vision</a>
+          <a href="applications.html">Applications</a>
+          <a href="contact.html">Contact</a>
         </div>
         <div class="footer-col">
-          <h4>Direct Inquiries</h4>
+          <h4>Contact</h4>
           <a href="mailto:contact@innermindtech.com">contact@innermindtech.com</a>
-          <a href="contact.html">Strategic Portal</a>
+          <a href="contact.html">Enquiry Form</a>
         </div>
       </div>
       <div class="footer-bottom">
