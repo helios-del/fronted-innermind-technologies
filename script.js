@@ -254,6 +254,154 @@
     }
   }
 
+  /* ---------- Multi-Instance Cognitive Field (Canvas) ---------- */
+  const fieldWraps = document.querySelectorAll(".hero-field");
+  if (fieldWraps.length) {
+    const COLORS = ["77,232,220", "93,140,255", "155,125,255"];
+
+    fieldWraps.forEach(fieldWrap => {
+      const canvas = document.createElement("canvas");
+      fieldWrap.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+      let w, h, dpr;
+      let points = [];
+      let raf = null;
+      let running = false;
+      const pointer = { x: -9999, y: -9999, active: false };
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = fieldWrap.clientWidth || fieldWrap.offsetWidth || 300;
+        h = fieldWrap.clientHeight || fieldWrap.offsetHeight || 200;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const density = Math.max(24, Math.min(75, Math.floor((w * h) / 22000)));
+        points = Array.from({ length: density }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          r: Math.random() * 1.4 + 0.6,
+          c: COLORS[Math.floor(Math.random() * COLORS.length)],
+        }));
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, w, h);
+        const linkDist = Math.min(140, w * 0.18);
+
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < -20) p.x = w + 20;
+          if (p.x > w + 20) p.x = -20;
+          if (p.y < -20) p.y = h + 20;
+          if (p.y > h + 20) p.y = -20;
+
+          if (pointer.active) {
+            const dx = p.x - pointer.x, dy = p.y - pointer.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < 26000) {
+              const d = Math.sqrt(d2) || 1;
+              p.x += (dx / d) * 0.25;
+              p.y += (dy / d) * 0.25;
+            }
+          }
+        }
+
+        for (let i = 0; i < points.length; i++) {
+          for (let j = i + 1; j < points.length; j++) {
+            const a = points[i], b = points[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < linkDist) {
+              const alpha = (1 - dist / linkDist) * 0.22;
+              ctx.strokeStyle = `rgba(${a.c},${alpha})`;
+              ctx.lineWidth = 0.6;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        if (pointer.active) {
+          for (let i = 0; i < points.length; i++) {
+            const p = points[i];
+            const dx = p.x - pointer.x, dy = p.y - pointer.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+              const alpha = (1 - dist / 160) * 0.35;
+              ctx.strokeStyle = `rgba(77,232,220,${alpha})`;
+              ctx.lineWidth = 0.7;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(pointer.x, pointer.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${p.c},.85)`;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        if (running) raf = requestAnimationFrame(step);
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        raf = requestAnimationFrame(step);
+      }
+      function stop() {
+        running = false;
+        if (raf) cancelAnimationFrame(raf);
+      }
+
+      resize();
+      if (reduceMotion) {
+        step();
+      } else {
+        start();
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(resize, 160);
+        });
+
+        const parentHost = fieldWrap.parentElement || fieldWrap;
+        parentHost.addEventListener("pointermove", e => {
+          const r = fieldWrap.getBoundingClientRect();
+          pointer.x = e.clientX - r.left;
+          pointer.y = e.clientY - r.top;
+          pointer.active = true;
+        });
+        parentHost.addEventListener("pointerleave", () => { pointer.active = false; });
+
+        if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => (entry.isIntersecting ? start() : stop()));
+          }, { threshold: 0 });
+          io.observe(fieldWrap);
+        }
+        document.addEventListener("visibilitychange", () => {
+          document.hidden ? stop() : start();
+        });
+      }
+    });
+  }
+
   /* ---------- EOS Flow Architecture Diagram ---------- */
   const eosDiagram = document.querySelector(".eos-diagram");
   if (eosDiagram) {
@@ -454,150 +602,6 @@
     const initialTab = tabs.find(t => t.classList.contains("is-active")) || tabs[0];
     requestAnimationFrame(() => moveIndicator(initialTab));
     window.addEventListener("resize", () => moveIndicator(explorer.querySelector(".explorer-tab.is-active") || initialTab));
-  }
-
-  /* ---------- Hero Cognitive Field (Canvas) ---------- */
-  const fieldWrap = document.querySelector(".hero-field");
-  if (fieldWrap) {
-    const canvas = document.createElement("canvas");
-    fieldWrap.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-    let w, h, dpr;
-    let points = [];
-    let raf = null;
-    let running = false;
-    const pointer = { x: -9999, y: -9999, active: false };
-
-    const COLORS = ["77,232,220", "93,140,255", "155,125,255"];
-
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = fieldWrap.clientWidth;
-      h = fieldWrap.clientHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = w + "px";
-      canvas.style.height = h + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      const density = Math.max(38, Math.min(80, Math.floor((w * h) / 22000)));
-      points = Array.from({ length: density }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        r: Math.random() * 1.4 + 0.6,
-        c: COLORS[Math.floor(Math.random() * COLORS.length)],
-      }));
-    }
-
-    function step() {
-      ctx.clearRect(0, 0, w, h);
-      const linkDist = Math.min(150, w * 0.14);
-
-      for (let i = 0; i < points.length; i++) {
-        const p = points[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -20) p.x = w + 20;
-        if (p.x > w + 20) p.x = -20;
-        if (p.y < -20) p.y = h + 20;
-        if (p.y > h + 20) p.y = -20;
-
-        if (pointer.active) {
-          const dx = p.x - pointer.x, dy = p.y - pointer.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < 26000) {
-            const d = Math.sqrt(d2) || 1;
-            p.x += (dx / d) * 0.25;
-            p.y += (dy / d) * 0.25;
-          }
-        }
-      }
-
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-          const a = points[i], b = points[j];
-          const dx = a.x - b.x, dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < linkDist) {
-            const alpha = (1 - dist / linkDist) * 0.22;
-            ctx.strokeStyle = `rgba(${a.c},${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      if (pointer.active) {
-        for (let i = 0; i < points.length; i++) {
-          const p = points[i];
-          const dx = p.x - pointer.x, dy = p.y - pointer.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 170) {
-            const alpha = (1 - dist / 170) * 0.35;
-            ctx.strokeStyle = `rgba(77,232,220,${alpha})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(pointer.x, pointer.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      for (let i = 0; i < points.length; i++) {
-        const p = points[i];
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(${p.c},.85)`;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      if (running) raf = requestAnimationFrame(step);
-    }
-
-    function start() {
-      if (running) return;
-      running = true;
-      raf = requestAnimationFrame(step);
-    }
-    function stop() {
-      running = false;
-      if (raf) cancelAnimationFrame(raf);
-    }
-
-    resize();
-    if (reduceMotion) {
-      step();
-    } else {
-      start();
-      let resizeTimer;
-      window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(resize, 160);
-      });
-      fieldWrap.addEventListener("pointermove", e => {
-        const r = fieldWrap.getBoundingClientRect();
-        pointer.x = e.clientX - r.left;
-        pointer.y = e.clientY - r.top;
-        pointer.active = true;
-      });
-      fieldWrap.addEventListener("pointerleave", () => { pointer.active = false; });
-
-      if ("IntersectionObserver" in window) {
-        const io = new IntersectionObserver(entries => {
-          entries.forEach(entry => (entry.isIntersecting ? start() : stop()));
-        }, { threshold: 0 });
-        io.observe(fieldWrap);
-      }
-      document.addEventListener("visibilitychange", () => {
-        document.hidden ? stop() : start();
-      });
-    }
   }
 
   /* ---------- Cognitive State Topology Simulator ---------- */
