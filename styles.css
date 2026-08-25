@@ -7,7 +7,6 @@
 
 /* ---------- 1. DESIGN TOKENS ---------- */
 :root {
-  /* Surface Palette */
   --void: #03070d;
   --bg: #070f1c;
   --bg-soft: #0a1524;
@@ -16,17 +15,14 @@
   --glass: rgba(13, 27, 45, 0.6);
   --glass-strong: rgba(10, 21, 36, 0.85);
 
-  /* Typography Colors */
   --text: #f3f7fb;
   --text-soft: #aebbcd;
   --text-mute: #71839c;
 
-  /* Lines & Accents */
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.16);
   --line-signal: rgba(77, 232, 220, 0.35);
 
-  /* Chromatic Signals */
   --cyan: #4de8dc;
   --blue: #5d8cff;
   --violet: #9b7dff;
@@ -34,24 +30,20 @@
   --grad-signal: linear-gradient(110deg, var(--cyan) 0%, var(--blue) 52%, var(--violet) 100%);
   --grad-warm: linear-gradient(110deg, var(--amber) 0%, #ff8fa3 100%);
 
-  /* Lighting & Shadows */
   --glow-cyan: 0 0 70px rgba(77, 232, 220, 0.14);
   --glow-blue: 0 0 70px rgba(93, 140, 255, 0.14);
   --shadow-card: 0 24px 60px -25px rgba(0, 0, 0, 0.7);
 
-  /* Typography Scale */
   --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Motion Curves */
   --ease: cubic-bezier(0.16, 0.8, 0.24, 1);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 180ms;
   --dur-med: 450ms;
   --dur-slow: 850ms;
 
-  /* Grid & Dimensions */
   --max: 1220px;
   --max-narrow: 840px;
   --nav-h: 78px;
@@ -630,20 +622,12 @@ html.has-custom-cursor button {
   margin-bottom: 12px;
 }
 
-/* ---------- 9. HOME HERO ---------- */
-.hero {
-  position: relative;
-  min-height: calc(100vh - var(--nav-h));
-  display: grid;
-  align-items: center;
-  overflow: hidden;
-  isolation: isolate;
-}
-
+/* ---------- 9. COGNITIVE BACKGROUND CANVAS FIELD ---------- */
 .hero-field {
   position: absolute;
   inset: 0;
   z-index: -1;
+  pointer-events: auto;
 }
 
 .hero-field canvas {
@@ -660,6 +644,20 @@ html.has-custom-cursor button {
     linear-gradient(105deg, var(--bg) 0%, rgba(7, 15, 28, 0.72) 34%, transparent 65%),
     linear-gradient(0deg, var(--bg) 0%, transparent 18%);
   pointer-events: none;
+}
+
+.cta-band .hero-field::after {
+  background: radial-gradient(circle at 50% 50%, rgba(7, 15, 28, 0.45) 0%, var(--bg) 95%);
+}
+
+/* ---------- 10. HOME HERO ---------- */
+.hero {
+  position: relative;
+  min-height: calc(100vh - var(--nav-h));
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .hero-inner {
@@ -700,10 +698,12 @@ html.has-custom-cursor button {
   100% { transform: scaleY(0.3); opacity: 0.4; }
 }
 
-/* ---------- 10. PAGE HERO ---------- */
+/* ---------- 11. PAGE HERO ---------- */
 .page-hero {
-  padding: 110px 0 70px;
   position: relative;
+  padding: 110px 0 70px;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .page-hero h1 {
@@ -711,7 +711,7 @@ html.has-custom-cursor button {
   margin: 20px 0 24px;
 }
 
-/* ---------- 11. QUOTE BAND ---------- */
+/* ---------- 12. QUOTE BAND ---------- */
 .band {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -749,7 +749,7 @@ html.has-custom-cursor button {
   letter-spacing: 0.08em;
 }
 
-/* ---------- 12. EOS ARCHITECTURE DIAGRAM ---------- */
+/* ---------- 13. EOS ARCHITECTURE DIAGRAM ---------- */
 .eos {
   position: relative;
 }
@@ -836,7 +836,7 @@ html.has-custom-cursor button {
   margin-bottom: 0;
 }
 
-/* ---------- 13. DIMENSIONS CONSTELLATION ---------- */
+/* ---------- 14. DIMENSIONS CONSTELLATION ---------- */
 .dims {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -971,7 +971,7 @@ html.has-custom-cursor button {
   display: block;
 }
 
-/* ---------- 14. TECH DIAGRAM ---------- */
+/* ---------- 15. TECH DIAGRAM ---------- */
 .tech-diagram {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1030,7 +1030,7 @@ html.has-custom-cursor button {
   color: var(--text);
 }
 
-/* ---------- 15. DIMENSION GRID CARDS ---------- */
+/* ---------- 16. DIMENSION GRID CARDS ---------- */
 .dimension {
   min-height: 180px;
   display: flex;
@@ -1044,7 +1044,7 @@ html.has-custom-cursor button {
   font-size: 24px;
 }
 
-/* ---------- 16. APPLICATIONS EXPLORER ---------- */
+/* ---------- 17. APPLICATIONS EXPLORER ---------- */
 .explorer {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -1188,7 +1188,7 @@ html.has-custom-cursor button {
   flex-shrink: 0;
 }
 
-/* ---------- 17. CONTACT ---------- */
+/* ---------- 18. CONTACT ---------- */
 .contact {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1277,7 +1277,7 @@ form {
   margin-top: 4px;
 }
 
-/* ---------- 18. CTA BAND ---------- */
+/* ---------- 19. CTA BAND ---------- */
 .cta-band {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -1286,19 +1286,7 @@ form {
   background: var(--glass);
   position: relative;
   overflow: hidden;
-}
-
-.cta-band::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 600px;
-  height: 300px;
-  background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(77, 232, 220, 0.12), transparent 70%);
-  transform: translate(-50%, 0);
-  animation: driftGlow 16s ease-in-out infinite;
-  pointer-events: none;
+  isolation: isolate;
 }
 
 .cta-band h2 {
@@ -1312,7 +1300,7 @@ form {
   position: relative;
 }
 
-/* ---------- 19. FOOTER ---------- */
+/* ---------- 20. FOOTER ---------- */
 footer {
   border-top: 1px solid var(--line);
   padding: 80px 0 34px;
@@ -1400,7 +1388,7 @@ footer {
   font-family: var(--font-mono);
 }
 
-/* ---------- 20. MOTION, REVEALS & SPOTLIGHTS ---------- */
+/* ---------- 21. MOTION, REVEALS & SPOTLIGHTS ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -1496,7 +1484,7 @@ body.nav-open .scroll-progress {
   transition: opacity 0.22s var(--ease);
 }
 
-/* ---------- 21. STATE TOPOLOGY & RADAR SIMULATOR ---------- */
+/* ---------- 22. STATE TOPOLOGY & RADAR SIMULATOR ---------- */
 .state-sim {
   margin: 48px 0;
   background: var(--glass);
@@ -1619,7 +1607,7 @@ body.nav-open .scroll-progress {
   transition: width 0.6s var(--ease-out);
 }
 
-/* ---------- 22. TELEMETRY STREAM HUD ---------- */
+/* ---------- 23. TELEMETRY STREAM HUD ---------- */
 .telemetry-box {
   margin: 36px 0;
   background: rgba(4, 9, 16, 0.75);
@@ -1714,7 +1702,7 @@ body.nav-open .scroll-progress {
   to { background-position: 240px 0; }
 }
 
-/* ---------- 23. RESPONSIVE ---------- */
+/* ---------- 24. RESPONSIVE ---------- */
 @media (max-width: 1080px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1842,7 +1830,7 @@ body.nav-open .scroll-progress {
   }
 }
 
-/* ---------- 24. REDUCED MOTION ---------- */
+/* ---------- 25. REDUCED MOTION ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
