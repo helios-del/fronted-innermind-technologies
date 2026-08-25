@@ -1,7 +1,7 @@
 /* =================================================================
-   INNERMIND TECHNOLOGIES — INTERACTION ARCHITECTURE LAYER
-   Vanilla JS Engine. High-performance, modular, accessible.
-   Hero Canvas & Custom Cursor preserved intact.
+   INNERMIND TECHNOLOGIES — INTERACTION LAYER
+   Vanilla JS with zero external dependencies.
+   Safe to include across all pages.
    ================================================================= */
 (() => {
   "use strict";
@@ -9,116 +9,94 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-  /* ---------- 1. Dynamic Footer Year ---------- */
+  /* ---------- Footer Dynamic Year ---------- */
   document.querySelectorAll("[data-year]").forEach(el => {
     el.textContent = new Date().getFullYear();
   });
 
-  /* ---------- 2. Top Scroll Progress Indicator ---------- */
+  /* ---------- Scroll Progress Bar ---------- */
   {
     const bar = document.createElement("div");
     bar.className = "scroll-progress";
-    bar.setAttribute("aria-hidden", "true");
     document.body.appendChild(bar);
     let ticking = false;
-
-    const updateProgress = () => {
+    const updateBar = () => {
       const h = document.documentElement;
       const scrollable = h.scrollHeight - h.clientHeight;
       const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
       bar.style.width = pct + "%";
       ticking = false;
     };
-
-    updateProgress();
+    updateBar();
     window.addEventListener("scroll", () => {
       if (!ticking) {
-        requestAnimationFrame(updateProgress);
+        requestAnimationFrame(updateBar);
         ticking = true;
       }
     }, { passive: true });
-    window.addEventListener("resize", updateProgress);
+    window.addEventListener("resize", updateBar);
   }
 
-  /* ---------- 3. Navigation Scroll State ---------- */
+  /* ---------- Nav Scroll State ---------- */
   const nav = document.querySelector(".nav");
   if (nav) {
-    const handleNavScroll = () => {
-      nav.classList.toggle("is-scrolled", window.scrollY > 12);
-    };
-    handleNavScroll();
-    window.addEventListener("scroll", handleNavScroll, { passive: true });
+    const setScrolled = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
+    setScrolled();
+    window.addEventListener("scroll", setScrolled, { passive: true });
   }
 
-  /* ---------- 4. Mobile Navigation Drawer ---------- */
+  /* ---------- Mobile Navigation Panel ---------- */
   const menuBtn = document.querySelector(".menu-btn");
   const mobilePanel = document.querySelector(".mobile-panel");
   if (menuBtn && mobilePanel) {
-    const closeMenu = () => {
+    const closePanel = () => {
       menuBtn.setAttribute("aria-expanded", "false");
       menuBtn.setAttribute("aria-label", "Open menu");
       mobilePanel.classList.remove("is-open");
       document.body.classList.remove("nav-open");
     };
-
-    const openMenu = () => {
+    const openPanel = () => {
       menuBtn.setAttribute("aria-expanded", "true");
       menuBtn.setAttribute("aria-label", "Close menu");
       mobilePanel.classList.add("is-open");
       document.body.classList.add("nav-open");
     };
-
     menuBtn.addEventListener("click", () => {
       const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
-      isOpen ? closeMenu() : openMenu();
+      isOpen ? closePanel() : openPanel();
     });
-
-    mobilePanel.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", closeMenu);
-    });
-
+    mobilePanel.querySelectorAll("a").forEach(a => a.addEventListener("click", closePanel));
     window.addEventListener("keydown", e => {
-      if (e.key === "Escape" && mobilePanel.classList.contains("is-open")) {
-        closeMenu();
-      }
+      if (e.key === "Escape") closePanel();
     });
   }
 
-  /* ---------- 5. Desktop Nav Hover Indicator Pill ---------- */
+  /* ---------- Desktop Nav Hover Pill ---------- */
   const navLinksWrap = document.querySelector(".nav-links");
   if (navLinksWrap) {
     const links = Array.from(navLinksWrap.querySelectorAll("a"));
     const pill = document.createElement("div");
     pill.className = "nav-pill";
-    pill.setAttribute("aria-hidden", "true");
     navLinksWrap.appendChild(pill);
 
-    const positionPill = (el) => {
-      if (!el) {
-        pill.style.opacity = "0";
-        return;
-      }
+    const moveTo = (el) => {
+      if (!el) { pill.style.opacity = "0"; return; }
       pill.style.left = el.offsetLeft + "px";
       pill.style.width = el.offsetWidth + "px";
       pill.style.opacity = "1";
     };
-
-    const resetToActive = () => {
-      const activeLink = navLinksWrap.querySelector("a.active");
-      positionPill(activeLink);
-    };
+    const restToActive = () => moveTo(navLinksWrap.querySelector("a.active"));
 
     links.forEach(link => {
-      link.addEventListener("mouseenter", () => positionPill(link));
-      link.addEventListener("focus", () => positionPill(link));
+      link.addEventListener("mouseenter", () => moveTo(link));
+      link.addEventListener("focus", () => moveTo(link));
     });
-
-    navLinksWrap.addEventListener("mouseleave", resetToActive);
-    window.addEventListener("resize", resetToActive);
-    resetToActive();
+    navLinksWrap.addEventListener("mouseleave", restToActive);
+    window.addEventListener("resize", restToActive);
+    restToActive();
   }
 
-  /* ---------- 6. Custom Cursor (Fine pointer & motion enabled) ---------- */
+  /* ---------- Custom Cursor ---------- */
   if (!isCoarsePointer && !reduceMotion && window.matchMedia("(min-width:801px)").matches) {
     const dot = document.createElement("div");
     dot.className = "cursor-dot";
@@ -156,7 +134,7 @@
     });
   }
 
-  /* ---------- 7. Magnetic Button Micro-Physics ---------- */
+  /* ---------- Magnetic Button Physics ---------- */
   if (!isCoarsePointer && !reduceMotion) {
     document.querySelectorAll(".btn").forEach(btn => {
       btn.addEventListener("mousemove", e => {
@@ -165,16 +143,14 @@
         const y = e.clientY - r.top - r.height / 2;
         btn.style.transform = `translate(${x * 0.22}px, ${y * 0.32}px)`;
       });
-      btn.addEventListener("mouseleave", () => {
-        btn.style.transform = "";
-      });
+      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
     });
   }
 
-  /* ---------- 8. Spotlight + 3D Tilt Surfaces ---------- */
+  /* ---------- Spotlight & 3D Tilt Surfaces ---------- */
   if (!isCoarsePointer && !reduceMotion) {
-    const tiltTargets = document.querySelectorAll(".card, .tech-box, .dimension-card, .cta-band");
-    const glowOnlyTargets = document.querySelectorAll(".eos-stage, .dim-panel");
+    const tiltTargets = document.querySelectorAll(".card, .tech-box, .explorer-tab, .cta-band, .state-sim");
+    const glowOnlyTargets = document.querySelectorAll(".eos-stage, .telemetry-box");
 
     const attachSpotlight = (el, allowTilt) => {
       el.classList.add("has-spotlight");
@@ -191,8 +167,8 @@
         glow.style.setProperty("--sx", px + "%");
         glow.style.setProperty("--sy", py + "%");
         if (allowTilt) {
-          const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -5;
-          const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 5;
+          const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -6;
+          const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 6;
           el.style.setProperty("--tilt-x", rx.toFixed(2) + "deg");
           el.style.setProperty("--tilt-y", ry.toFixed(2) + "deg");
         }
@@ -207,7 +183,7 @@
     glowOnlyTargets.forEach(el => attachSpotlight(el, false));
   }
 
-  /* ---------- 9. Split-Text Headline Reveal ---------- */
+  /* ---------- Word-by-Word Reveal Stagger ---------- */
   const splitIntoWords = (root) => {
     let wordIndex = 0;
     const GRADIENT_CLASSES = ["gradient", "gradient-warm"];
@@ -224,7 +200,7 @@
             } else {
               const span = document.createElement("span");
               span.className = inheritedGradient ? `word ${inheritedGradient}` : "word";
-              span.style.setProperty("--stagger", (wordIndex * 0.032) + "s");
+              span.style.setProperty("--stagger", (wordIndex * 0.035) + "s");
               span.textContent = part;
               wordIndex += 1;
               frag.appendChild(span);
@@ -233,9 +209,7 @@
           node.replaceChild(frag, child);
         } else if (child.nodeType === Node.ELEMENT_NODE) {
           let grad = inheritedGradient;
-          GRADIENT_CLASSES.forEach(gc => {
-            if (child.classList.contains(gc)) grad = gc;
-          });
+          GRADIENT_CLASSES.forEach(gc => { if (child.classList.contains(gc)) grad = gc; });
           walk(child, grad);
         }
       });
@@ -251,14 +225,18 @@
     });
   }
 
-  /* ---------- 10. Reveal Trigger Observer ---------- */
+  /* ---------- Auto-tag Reveal Groups ---------- */
   document.querySelectorAll(".hero-inner, .page-hero .container").forEach(container => {
     container.classList.add("reveal-group");
     Array.from(container.children).forEach(child => {
       if (!child.classList.contains("split-reveal")) child.classList.add("reveal");
     });
   });
+  document.querySelectorAll("footer .footer-grid, footer .footer-bottom").forEach(el => {
+    el.classList.add("reveal");
+  });
 
+  /* ---------- Scroll Reveal Observer ---------- */
   const revealEls = document.querySelectorAll(".reveal, .split-reveal");
   if (revealEls.length) {
     if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -271,12 +249,12 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.14, rootMargin: "0px 0px -30px 0px" });
+      }, { threshold: 0.16, rootMargin: "0px 0px -40px 0px" });
       revealEls.forEach(el => io.observe(el));
     }
   }
 
-  /* ---------- 11. EOS Pipeline Flow Animation ---------- */
+  /* ---------- EOS Flow Architecture Diagram ---------- */
   const eosDiagram = document.querySelector(".eos-diagram");
   if (eosDiagram) {
     let svgRoot = null;
@@ -291,9 +269,9 @@
         path.setAttribute("id", pathId);
         [0, 0.5].forEach((phase, idx) => {
           const dot = document.createElementNS(svgNS, "circle");
-          dot.setAttribute("r", "3.6");
+          dot.setAttribute("r", "3.4");
           dot.setAttribute("fill", idx === 0 ? "#4de8dc" : "#9b7dff");
-          dot.setAttribute("opacity", "0.95");
+          dot.setAttribute("opacity", "0.9");
           const motion = document.createElementNS(svgNS, "animateMotion");
           motion.setAttribute("dur", "4.2s");
           motion.setAttribute("repeatCount", "indefinite");
@@ -308,7 +286,6 @@
         if (svgRoot.pauseAnimations) svgRoot.pauseAnimations();
       }
     });
-
     if (reduceMotion || !("IntersectionObserver" in window)) {
       eosDiagram.classList.add("is-visible");
     } else {
@@ -320,12 +297,12 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.25 });
+      }, { threshold: 0.28 });
       io.observe(eosDiagram);
     }
   }
 
-  /* ---------- 12. 15 Dimensions Constellation Radial Model ---------- */
+  /* ---------- Dimensions Constellation Visualizer ---------- */
   const constellation = document.querySelector(".constellation");
   if (constellation) {
     const nodesData = window.INNERMIND_DIMENSIONS || [];
@@ -343,8 +320,8 @@
     connectorLine.setAttribute("x2", "50");
     connectorLine.setAttribute("y2", "50");
     connectorLine.setAttribute("stroke", "#4de8dc");
-    connectorLine.setAttribute("stroke-width", "0.4");
-    connectorLine.setAttribute("opacity", "0.75");
+    connectorLine.setAttribute("stroke-width", "0.35");
+    connectorLine.setAttribute("opacity", "0.65");
     connectorSvg.appendChild(connectorLine);
     if (core) core.insertAdjacentElement("afterend", connectorSvg);
 
@@ -368,7 +345,7 @@
       if (panelDesc) panelDesc.textContent = d.desc;
     };
 
-    const setActiveNode = (i) => {
+    const setActive = (i) => {
       nodesLayer.querySelectorAll(".dim-node").forEach(n => n.classList.remove("is-active"));
       const node = nodesLayer.querySelector(`[data-i="${i}"]`);
       if (node) node.classList.add("is-active");
@@ -386,7 +363,7 @@
         setTimeout(() => {
           applyContent(i);
           panelFields.forEach(el => { el.style.opacity = "1"; });
-        }, 120);
+        }, 140);
       }
     };
 
@@ -403,14 +380,14 @@
       btn.style.setProperty("--x", x + "%");
       btn.style.setProperty("--y", y + "%");
       btn.dataset.i = i;
-      btn.setAttribute("aria-label", `Dimension: ${d.name}`);
-      btn.addEventListener("mouseenter", () => setActiveNode(i));
-      btn.addEventListener("focus", () => setActiveNode(i));
-      btn.addEventListener("click", () => setActiveNode(i));
+      btn.setAttribute("aria-label", d.name);
+      btn.addEventListener("mouseenter", () => setActive(i));
+      btn.addEventListener("focus", () => setActive(i));
+      btn.addEventListener("click", () => setActive(i));
       nodesLayer.appendChild(btn);
     });
 
-    if (total) setActiveNode(0);
+    if (total) setActive(0);
 
     if (ring) {
       constellation.addEventListener("mouseenter", () => { ring.style.animationPlayState = "paused"; });
@@ -420,7 +397,7 @@
     }
   }
 
-  /* ---------- 13. Applications Multi-Domain Explorer ---------- */
+  /* ---------- Applications Explorer Tabs ---------- */
   const explorer = document.querySelector(".explorer");
   if (explorer) {
     const tabsWrap = explorer.querySelector(".explorer-tabs");
@@ -434,8 +411,8 @@
 
     const moveIndicator = (tab) => {
       if (!indicator || !tab) return;
-      const isMobile = window.matchMedia("(max-width:1100px)").matches;
-      if (isMobile) {
+      const horizontal = window.matchMedia("(max-width:1080px)").matches;
+      if (horizontal) {
         indicator.style.height = "100%";
         indicator.style.width = tab.offsetWidth + "px";
         indicator.style.transform = `translateX(${tab.offsetLeft}px)`;
@@ -446,31 +423,30 @@
       }
     };
 
-    const activateTab = (tab) => {
+    const activate = (tab) => {
       const target = tab.getAttribute("data-target");
       tabs.forEach(t => {
-        const isActive = t === tab;
-        t.classList.toggle("is-active", isActive);
-        t.setAttribute("aria-selected", isActive ? "true" : "false");
-        t.tabIndex = isActive ? 0 : -1;
+        t.classList.toggle("is-active", t === tab);
+        t.setAttribute("aria-selected", t === tab ? "true" : "false");
+        t.tabIndex = t === tab ? 0 : -1;
       });
       panels.forEach(p => p.classList.toggle("is-active", p.id === target));
       moveIndicator(tab);
     };
 
     tabs.forEach((tab, i) => {
-      tab.addEventListener("click", () => activateTab(tab));
+      tab.addEventListener("click", () => activate(tab));
       tab.addEventListener("keydown", e => {
-        const isHorizontal = window.matchMedia("(max-width:1100px)").matches;
-        const nextKey = isHorizontal ? "ArrowRight" : "ArrowDown";
-        const prevKey = isHorizontal ? "ArrowLeft" : "ArrowUp";
+        const horizontal = window.matchMedia("(max-width:1080px)").matches;
+        const nextKey = horizontal ? "ArrowRight" : "ArrowDown";
+        const prevKey = horizontal ? "ArrowLeft" : "ArrowUp";
         let target = null;
         if (e.key === nextKey) target = tabs[(i + 1) % tabs.length];
         if (e.key === prevKey) target = tabs[(i - 1 + tabs.length) % tabs.length];
         if (target) {
           e.preventDefault();
           target.focus();
-          activateTab(target);
+          activate(target);
         }
       });
     });
@@ -480,7 +456,7 @@
     window.addEventListener("resize", () => moveIndicator(explorer.querySelector(".explorer-tab.is-active") || initialTab));
   }
 
-  /* ---------- 14. Hero Cognitive Field Canvas (PRESERVED) ---------- */
+  /* ---------- Hero Cognitive Field (Canvas) ---------- */
   const fieldWrap = document.querySelector(".hero-field");
   if (fieldWrap) {
     const canvas = document.createElement("canvas");
@@ -622,5 +598,69 @@
         document.hidden ? stop() : start();
       });
     }
+  }
+
+  /* ---------- Cognitive State Topology Simulator ---------- */
+  const stateSim = document.querySelector(".state-sim");
+  if (stateSim) {
+    const poly = document.getElementById("radarPolygon");
+    const desc = document.getElementById("stateDesc");
+    const mValence = document.getElementById("m-valence");
+    const mLoad = document.getElementById("m-load");
+    const mCadence = document.getElementById("m-cadence");
+    const mReceptivity = document.getElementById("m-receptivity");
+
+    const PRESETS = {
+      flow: {
+        points: "200,60 325,130 280,265 200,315 115,245 90,135",
+        valence: "88%",
+        load: "45%",
+        cadence: "92%",
+        receptivity: "74%",
+        desc: "State: High focus stability with balanced cognitive load and positive valence alignment."
+      },
+      overload: {
+        points: "200,110 340,110 330,310 200,240 75,270 120,165",
+        valence: "24%",
+        load: "94%",
+        cadence: "40%",
+        receptivity: "31%",
+        desc: "State: Elevated cognitive strain with fragmented focus stability and elevated fatigue delta."
+      },
+      curiosity: {
+        points: "200,50 295,145 260,250 200,340 140,255 70,110",
+        valence: "92%",
+        load: "58%",
+        cadence: "78%",
+        receptivity: "96%",
+        desc: "State: High receptivity to novel inputs with exploratory pacing and low friction."
+      },
+      fatigue: {
+        points: "200,140 250,160 270,230 200,260 135,230 145,160",
+        valence: "42%",
+        load: "76%",
+        cadence: "22%",
+        receptivity: "38%",
+        desc: "State: Attenuated attentional band with slowed response cadence and high latency."
+      }
+    };
+
+    const presetBtns = stateSim.querySelectorAll(".preset-btn");
+    presetBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        presetBtns.forEach(b => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+
+        const data = PRESETS[btn.dataset.preset];
+        if (!data) return;
+
+        if (poly) poly.setAttribute("points", data.points);
+        if (mValence) mValence.style.width = data.valence;
+        if (mLoad) mLoad.style.width = data.load;
+        if (mCadence) mCadence.style.width = data.cadence;
+        if (mReceptivity) mReceptivity.style.width = data.receptivity;
+        if (desc) desc.textContent = data.desc;
+      });
+    });
   }
 })();
