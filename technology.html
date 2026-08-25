@@ -12,36 +12,35 @@
   <meta property="og:url" content="https://innermindtech.com/technology.html">
   <meta property="og:image" content="assets/image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#060d19">
+  <meta name="theme-color" content="#070f1c">
   <link rel="icon" href="assets/image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav class="nav" aria-label="Main Navigation">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html" aria-label="Innermind Technologies Homepage">
-        <img src="assets/image.png" alt="Innermind Technologies emblem" width="36" height="36">
-        <span>INNERMIND TECHNOLOGIES</span>
-      </a>
-      <div class="nav-right">
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="technology.html" class="active" aria-current="page">Technology</a>
-          <a href="about.html">About</a>
-          <a href="applications.html">Applications</a>
-          <a href="contact.html">Contact</a>
+  <header>
+    <nav class="nav" aria-label="Main Navigation">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/image.png" alt="Innermind Technologies Logo" width="38" height="38">
+          <span>INNERMIND TECHNOLOGIES</span>
+        </a>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="technology.html" class="active" aria-current="page">Technology</a>
+            <a href="about.html">About</a>
+            <a href="applications.html">Applications</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
+          <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span></button>
         </div>
-        <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
-        <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span>
-        </button>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
   <div class="mobile-panel" id="mobile-nav" aria-label="Mobile Navigation">
     <a href="index.html">Home</a>
@@ -53,164 +52,199 @@
   </div>
 
   <main id="main">
-
-    <section class="page-hero">
+    <section class="page-hero" aria-label="Technology Introduction">
       <div class="container">
-        <div class="eyebrow">Technical Architecture</div>
+        <div class="eyebrow">System Architecture</div>
         <h1>The <span class="gradient">Emotional Operating System.</span></h1>
-        <p class="lead">A proposed real-time middleware layer bridging human cognitive states and adaptive computing systems via high-dimensional latent state inference.</p>
+        <p class="lead">A proposed adaptive computational layer connecting human psychological state with intelligent applications — architected around multidimensional inference and continuous adaptation.</p>
       </div>
     </section>
 
     <!-- ARCHITECTURE PIPELINE -->
-    <section class="section-tight">
+    <section class="section-tight" aria-label="Inference Pipeline">
       <div class="container">
         <div class="section-head reveal">
-          <div class="eyebrow">Inference Pipeline</div>
+          <div class="eyebrow">Pipeline Overview</div>
           <h2>Signals in. State inferred. Experience adapts.</h2>
-          <p>The EOS computational cycle translates raw behavioral telemetry into rich psychological representations to dynamically guide application behavior.</p>
+        </div>
+
+        <!-- TELEMETRY STREAM HUD -->
+        <div class="telemetry-box reveal" aria-label="Real-time Input Signal Telemetry">
+          <div class="telemetry-bar">
+            <div class="hud-indicator"><span class="pulse-dot"></span> STREAMING TELEMETRY (LIVE RECEPTOR)</div>
+            <div class="hud-stats mono">FREQ: 128Hz &nbsp;|&nbsp; LATENCY: 4.2ms &nbsp;|&nbsp; DIMENSIONS: 15 ACTIVE</div>
+          </div>
+          <div class="stream-channels">
+            <div class="stream-channel">
+              <span class="channel-name mono">CH-01: TEMPORAL_INTERVAL</span>
+              <div class="channel-wave wave-1"></div>
+            </div>
+            <div class="stream-channel">
+              <span class="channel-name mono">CH-02: ATTENTION_FLUX</span>
+              <div class="channel-wave wave-2"></div>
+            </div>
+            <div class="stream-channel">
+              <span class="channel-name mono">CH-03: COGNITIVE_FATIGUE_DELTA</span>
+              <div class="channel-wave wave-3"></div>
+            </div>
+          </div>
         </div>
 
         <div class="tech-diagram reveal-group">
           <div class="tech-box reveal">
-            <small>01 · Telemetry Intake</small>
-            <h3>Human Signal Intake</h3>
-            <p class="muted">Captures non-invasive behavioral telemetry including interaction velocity, session rhythm, correction patterns, and temporal friction.</p>
+            <small>01 · Input</small>
+            <h3>Human Signals &amp; Context</h3>
+            <p class="muted">Interaction timing, workflow pacing, and environmental context form a streaming representation of engagement.</p>
             <div class="signal-chips">
-              <span>Keystroke Rhythm</span>
-              <span>Temporal Latency</span>
-              <span>Contextual Drift</span>
-              <span>Session Depth</span>
+              <span>Interaction timing</span><span>Engagement cadence</span><span>Explicit input</span><span>Contextual clues</span>
             </div>
           </div>
           <div class="tech-box main reveal">
-            <small>02 · Latent Processing</small>
-            <h3>Multidimensional Inference</h3>
-            <p class="muted">Processes telemetry across a 15-dimensional psychological state manifold, estimating continuous cognitive and emotional trajectories.</p>
-            <div class="signal-chips">
-              <span>Dynamic Weights</span>
-              <span>State Probability</span>
-              <span>Noise Filtering</span>
-              <span>Manifold Mapping</span>
-            </div>
+            <small>02 · Core</small>
+            <h3>Inference Layer</h3>
+            <p class="muted">Up to fifteen psychological dimensions form the conceptual framework for interpreting complex cognitive patterns in real time.</p>
           </div>
           <div class="tech-box reveal">
-            <small>03 · Adaptive Execution</small>
-            <h3>Policy &amp; Adaptation</h3>
-            <p class="muted">Dispatches state-conditioned parameters to downstream user interfaces, adjusting pacing, cognitive complexity, and assistance levels.</p>
-            <div class="signal-chips">
-              <span>UI Density Shift</span>
-              <span>Pacing Modulation</span>
-              <span>Tone Adjustment</span>
-              <span>Friction Dampening</span>
-            </div>
+            <small>03 · Output</small>
+            <h3>Adaptive Response</h3>
+            <p class="muted">Context-aware interface responses dynamically adjust cognitive load, formatting, and feedback loops.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 15 DIMENSIONS INTERACTIVE CONSTELLATION -->
-    <section class="band" id="dimensions">
+    <!-- DIMENSIONS CONSTELLATION & SIMULATOR -->
+    <section class="band" id="dimensions" aria-label="Conceptual Dimensions Model">
       <div class="container">
         <div class="section-head reveal">
-          <div class="eyebrow">State Representation Model</div>
-          <h2>The 15 Psychological Dimensions.</h2>
-          <p>Human psychological states cannot be accurately represented by a scalar value. Innermind models cognitive and affective states across an interconnected fifteen-dimensional coordinate system.</p>
+          <div class="eyebrow">A Multidimensional Model</div>
+          <h2>Beyond one-dimensional personalisation.</h2>
+          <p>Human experience cannot be reduced to a single score. Innermind's architecture evaluates interdependent psychological factors concurrently.</p>
+        </div>
+
+        <!-- STATE-SPACE RADAR SIMULATOR -->
+        <div class="state-sim reveal" aria-label="Cognitive State Topology Simulator">
+          <div class="state-sim-header">
+            <div class="state-sim-title">
+              <span class="mono" style="color:var(--cyan);font-size:12px;">SIMULATION ENGINE // LIVE TOPOLOGY</span>
+              <h3 style="margin-top:6px;">Affective State Representation</h3>
+            </div>
+            <div class="state-presets" role="group" aria-label="Preset cognitive states">
+              <button class="preset-btn is-active" data-preset="flow">Focused Flow</button>
+              <button class="preset-btn" data-preset="overload">Cognitive Strain</button>
+              <button class="preset-btn" data-preset="curiosity">Exploratory</button>
+              <button class="preset-btn" data-preset="fatigue">State Fatigue</button>
+            </div>
+          </div>
+
+          <div class="state-sim-grid">
+            <div class="radar-wrap">
+              <svg class="radar-svg" viewBox="0 0 400 400" aria-hidden="true">
+                <defs>
+                  <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#4de8dc" stop-opacity="0.35"/>
+                    <stop offset="60%" stop-color="#5d8cff" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#9b7dff" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <polygon class="radar-grid" points="200,40 338,120 338,280 200,360 62,280 62,120"/>
+                <polygon class="radar-grid" points="200,80 304,140 304,260 200,320 96,260 96,140"/>
+                <polygon class="radar-grid" points="200,120 269,160 269,240 200,280 131,240 131,160"/>
+                <polygon id="radarPolygon" class="radar-poly" points="200,60 325,130 280,265 200,315 115,245 90,135" fill="url(#radarGlow)"/>
+                <text x="200" y="28" text-anchor="middle" class="radar-lbl">Attention (01)</text>
+                <text x="350" y="125" text-anchor="start" class="radar-lbl">Arousal (02)</text>
+                <text x="350" y="285" text-anchor="start" class="radar-lbl">Cognitive Load (04)</text>
+                <text x="200" y="385" text-anchor="middle" class="radar-lbl">Stability (06)</text>
+                <text x="50" y="285" text-anchor="end" class="radar-lbl">Receptivity (14)</text>
+                <text x="50" y="125" text-anchor="end" class="radar-lbl">Valence (03)</text>
+              </svg>
+            </div>
+
+            <div class="state-metrics">
+              <div class="metric-row">
+                <span class="mono">VALENCE SPECTRUM</span>
+                <div class="bar-track"><div class="bar-fill" id="m-valence" style="width: 88%;"></div></div>
+              </div>
+              <div class="metric-row">
+                <span class="mono">COGNITIVE DEMAND</span>
+                <div class="bar-track"><div class="bar-fill" id="m-load" style="width: 45%;"></div></div>
+              </div>
+              <div class="metric-row">
+                <span class="mono">ENGAGEMENT CADENCE</span>
+                <div class="bar-track"><div class="bar-fill" id="m-cadence" style="width: 92%;"></div></div>
+              </div>
+              <div class="metric-row">
+                <span class="mono">NEURAL RECEPTIVITY</span>
+                <div class="bar-track"><div class="bar-fill" id="m-receptivity" style="width: 74%;"></div></div>
+              </div>
+              <p id="stateDesc" class="muted mono" style="font-size:12.5px;margin-top:16px;">State: High focus stability with balanced cognitive load and positive valence alignment.</p>
+            </div>
+          </div>
         </div>
 
         <div class="dims">
-          <div class="constellation reveal" role="group" aria-label="Interactive Fifteen Dimensions Constellation — Hover or click nodes to view definitions">
+          <div class="constellation reveal" role="group" aria-label="Fifteen conceptual psychological dimensions — hover or focus a node to inspect details">
             <div class="constellation-ring" aria-hidden="true">
               <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.3"/>
-                <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.3"/>
+                <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="0.3"/>
+                <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="0.3"/>
               </svg>
             </div>
-            <div class="constellation-core">
-              <span>Latent<br>State</span>
-            </div>
+            <div class="constellation-core"><span>Inferred<br>State</span></div>
           </div>
 
           <div class="dim-panel reveal">
             <span class="index mono" data-dim-index>01 / 15</span>
-            <h3 data-dim-name>Attention</h3>
-            <p data-dim-desc>How focused or diffuse a person's engagement appears to be in the moment.</p>
-            <span class="dim-hint">Interactive Constellation: Select or hover any peripheral node to inspect dimensions.</span>
-            <p class="dims-caption">Note: These fifteen dimensions represent a conceptual architectural framework currently under development by Innermind Technologies, rather than an established diagnostic or clinical instrument.</p>
+            <h3 data-dim-name>—</h3>
+            <p data-dim-desc>—</p>
+            <span class="dim-hint">Hover, click, or tab through the radial nodes to explore each dimension.</span>
+            <p class="dims-caption">These fifteen dimensions represent an illustrative conceptual sketch of the multidimensional model Innermind is exploring, rather than a clinical diagnostic instrument.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SAMPLE DIMENSIONS DETAIL -->
-    <section class="section-tight">
+    <!-- THREE EXAMPLE DIMENSIONS -->
+    <section class="section-tight" aria-label="Sample Dimensions">
       <div class="container">
-        <div class="section-head reveal">
-          <div class="eyebrow">Sample Dimensions In Detail</div>
-          <h2>Core parameters of the inference layer.</h2>
-        </div>
         <div class="grid reveal-group">
-          <div class="dimension-card reveal">
-            <span class="mono" style="color:var(--cyan);font-size:12px;">DIM_01</span>
-            <strong>Attention Focus</strong>
-            <p class="muted">Measures the focal coherence of active engagement versus cognitive distraction during complex tasks.</p>
-          </div>
-          <div class="dimension-card reveal">
-            <span class="mono" style="color:var(--cyan);font-size:12px;">DIM_02</span>
-            <strong>Cognitive Load</strong>
-            <p class="muted">Estimates real-time working memory utilization based on task complexity and execution delays.</p>
-          </div>
-          <div class="dimension-card reveal">
-            <span class="mono" style="color:var(--cyan);font-size:12px;">DIM_03</span>
-            <strong>Affective Valence</strong>
-            <p class="muted">Tracks the positive-to-negative spectrum of interaction sentiment and workflow ease.</p>
-          </div>
+          <div class="card dimension reveal"><span class="number">01</span><strong>Attention</strong><span class="muted">How focused or diffuse user engagement appears across intervals</span></div>
+          <div class="card dimension reveal"><span class="number">02</span><strong>Valence</strong><span class="muted">The broad positive-to-negative tone of an inferred cognitive state</span></div>
+          <div class="card dimension reveal"><span class="number">03</span><strong>Cognitive Load</strong><span class="muted">The degree of mental effort an interaction appears to demand</span></div>
         </div>
+        <p class="muted" style="margin-top:26px">The complete set of fifteen dimensions is part of Innermind's ongoing exploratory research.</p>
       </div>
     </section>
 
     <!-- ARCHITECTURAL PRINCIPLES -->
-    <section class="band section-tight">
+    <section class="band section-tight" aria-label="System Principles">
       <div class="container">
         <div class="section-head reveal">
-          <div class="eyebrow">Engineering Tenets</div>
-          <h2>Principles of the affective architecture.</h2>
+          <div class="eyebrow">Design Principles</div>
+          <h2>How the architecture is built.</h2>
         </div>
         <div class="grid reveal-group">
-          <div class="card reveal">
-            <span class="number">01 · CONTINUOUS</span>
-            <h3>Dynamic State Tracking</h3>
-            <p>State evaluation runs continuously throughout a session rather than caching a static profile at initial authentication.</p>
-          </div>
-          <div class="card reveal">
-            <span class="number">02 · DECENTRALIZED</span>
-            <h3>Local Compute First</h3>
-            <p>Inference pipelines are designed to evaluate telemetry locally on edge hardware, prioritizing user data autonomy.</p>
-          </div>
-          <div class="card reveal">
-            <span class="number">03 · TRANSPARENT</span>
-            <h3>Explainable Policies</h3>
-            <p>Interface adaptations are bound to clear, deterministically auditable rules rather than opaque generative black boxes.</p>
-          </div>
+          <div class="card reveal"><span class="number">STREAMING</span><h3>Continuous Adaptation</h3><p>Conceived to update as context and inferred states evolve over the course of an active session.</p></div>
+          <div class="card reveal"><span class="number">MULTIVARIATE</span><h3>No Single Score</h3><p>Multiple dimensions are weighted together to prevent reductionist, one-size-fits-all adaptation.</p></div>
+          <div class="card reveal"><span class="number">ETHICAL</span><h3>Human-Centred Limits</h3><p>Designed with strict computational boundaries prioritizing human dignity and user control.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- CALL TO ACTION -->
-    <section>
+    <!-- CTA -->
+    <section aria-label="Applications Link">
       <div class="container">
         <div class="cta-band reveal">
-          <div class="eyebrow" style="justify-content:center;">See Applied Systems</div>
-          <h2 style="margin-top: 18px;">Discover practical applications of the architecture.</h2>
+          <div class="eyebrow" style="justify-content:center">See It In Context</div>
+          <h2 style="margin-top:18px">Explore where this architecture could apply.</h2>
           <div class="buttons">
-            <a class="btn primary" href="applications.html">Explore Applications
+            <a class="btn primary" href="applications.html">View applications
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
             </a>
           </div>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -218,29 +252,28 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand">
-            <img src="assets/image.png" alt="Innermind Technologies emblem" width="32" height="32">
+            <img src="assets/image.png" alt="Innermind Technologies Logo" width="34" height="34">
             <span>INNERMIND TECHNOLOGIES</span>
           </div>
-          <p class="footer-blurb">Architecting deep cognition — an adaptive computational layer designed to understand changing human cognitive and emotional states.</p>
+          <p class="footer-blurb">Architecting deep cognition — an adaptive layer designed to help technology understand changing human cognitive and emotional states.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4>Site</h4>
           <a href="index.html">Home</a>
           <a href="technology.html">Technology</a>
           <a href="about.html">About</a>
           <a href="applications.html">Applications</a>
         </div>
         <div class="footer-col">
-          <h4>Research</h4>
-          <a href="technology.html#dimensions">15 Dimensions</a>
-          <a href="about.html">Research Philosophy</a>
-          <a href="applications.html">Impact Vectors</a>
-          <a href="contact.html">Partnerships</a>
+          <h4>Company</h4>
+          <a href="about.html">Mission &amp; Vision</a>
+          <a href="applications.html">Applications</a>
+          <a href="contact.html">Contact</a>
         </div>
         <div class="footer-col">
-          <h4>Direct Inquiries</h4>
+          <h4>Contact</h4>
           <a href="mailto:contact@innermindtech.com">contact@innermindtech.com</a>
-          <a href="contact.html">Strategic Portal</a>
+          <a href="contact.html">Enquiry Form</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -256,17 +289,17 @@
       { name: "Arousal", desc: "The intensity of activation behind an interaction, from calm to keyed-up." },
       { name: "Valence", desc: "The general positive-to-negative emotional tone of an inferred state." },
       { name: "Cognitive Load", desc: "How much mental effort a given moment of interaction seems to demand." },
-      { name: "Stress Response", desc: "Signs of pressure, urgency, or strain appearing across interaction patterns." },
-      { name: "Focus Stability", desc: "How consistently attention holds versus drifts across an extended workflow." },
-      { name: "Motivation Drive", desc: "The apparent momentum behind continuing, pausing, or re-engaging with an activity." },
-      { name: "Curiosity Vector", desc: "Openness to exploring novel pathways, unfamiliar inputs, or exploratory content." },
-      { name: "Fatigue Delta", desc: "Accumulated latency and degradation markers building over an extended session." },
-      { name: "Execution Confidence", desc: "How decisive versus hesitant user inputs and navigation trajectories appear." },
-      { name: "Social Orientation", desc: "A preference for collaborative, communicative interfaces versus solitary focus." },
-      { name: "Novelty Response", desc: "How resiliently or reactively a user handles unexpected interface disruptions." },
-      { name: "Affective Stability", desc: "The degree of variance or steady-state equilibrium in inferred emotional metrics." },
-      { name: "Receptivity Index", desc: "Current capacity to absorb guidance, suggestions, or workflow pivots." },
-      { name: "Flow Alignment", desc: "The state of deep, low-friction synchrony between task demand and user performance." }
+      { name: "Stress", desc: "Signs of pressure or strain appearing across how someone is engaging." },
+      { name: "Focus Stability", desc: "How consistently attention holds versus drifts over a session." },
+      { name: "Motivation", desc: "The apparent drive behind continuing, pausing, or concluding an activity." },
+      { name: "Curiosity", desc: "Openness to exploring something new, unfamiliar, or unprompted." },
+      { name: "Fatigue", desc: "Accumulated signs of tiredness building across an extended session." },
+      { name: "Confidence", desc: "How decisive or hesitant interaction patterns appear to be." },
+      { name: "Social Orientation", desc: "A tendency toward collaborative interaction versus solitary focus." },
+      { name: "Novelty Response", desc: "How someone responds when encountering unexpected information or stimuli." },
+      { name: "Emotional Stability", desc: "How steady or fluctuating an inferred state appears over time." },
+      { name: "Receptivity", desc: "Openness to suggestions, prompts, or changes in workflow in a given moment." },
+      { name: "Flow", desc: "The sense of absorbed, low-friction engagement in a task." }
     ];
   </script>
   <script src="script.js" defer></script>
