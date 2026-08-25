@@ -1,7 +1,7 @@
 /* =================================================================
-   INNERMIND TECHNOLOGIES — INTERACTION LAYER
-   Vanilla JS. Every module checks for its DOM target before running,
-   so this single file is safe to include on every page.
+   INNERMIND TECHNOLOGIES — INTERACTION ARCHITECTURE LAYER
+   Vanilla JS Engine. High-performance, modular, accessible.
+   Hero Canvas & Custom Cursor preserved intact.
    ================================================================= */
 (() => {
   "use strict";
@@ -9,94 +9,116 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-  /* ---------- Footer year ---------- */
+  /* ---------- 1. Dynamic Footer Year ---------- */
   document.querySelectorAll("[data-year]").forEach(el => {
     el.textContent = new Date().getFullYear();
   });
 
-  /* ---------- Scroll progress bar ---------- */
+  /* ---------- 2. Top Scroll Progress Indicator ---------- */
   {
     const bar = document.createElement("div");
     bar.className = "scroll-progress";
+    bar.setAttribute("aria-hidden", "true");
     document.body.appendChild(bar);
     let ticking = false;
-    const updateBar = () => {
+
+    const updateProgress = () => {
       const h = document.documentElement;
       const scrollable = h.scrollHeight - h.clientHeight;
       const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
       bar.style.width = pct + "%";
       ticking = false;
     };
-    updateBar();
+
+    updateProgress();
     window.addEventListener("scroll", () => {
       if (!ticking) {
-        requestAnimationFrame(updateBar);
+        requestAnimationFrame(updateProgress);
         ticking = true;
       }
     }, { passive: true });
-    window.addEventListener("resize", updateBar);
+    window.addEventListener("resize", updateProgress);
   }
 
-  /* ---------- Nav scroll state ---------- */
+  /* ---------- 3. Navigation Scroll State ---------- */
   const nav = document.querySelector(".nav");
   if (nav) {
-    const setScrolled = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
-    setScrolled();
-    window.addEventListener("scroll", setScrolled, { passive: true });
+    const handleNavScroll = () => {
+      nav.classList.toggle("is-scrolled", window.scrollY > 12);
+    };
+    handleNavScroll();
+    window.addEventListener("scroll", handleNavScroll, { passive: true });
   }
 
-  /* ---------- Mobile navigation panel ---------- */
+  /* ---------- 4. Mobile Navigation Drawer ---------- */
   const menuBtn = document.querySelector(".menu-btn");
   const mobilePanel = document.querySelector(".mobile-panel");
   if (menuBtn && mobilePanel) {
-    const closePanel = () => {
+    const closeMenu = () => {
       menuBtn.setAttribute("aria-expanded", "false");
       menuBtn.setAttribute("aria-label", "Open menu");
       mobilePanel.classList.remove("is-open");
       document.body.classList.remove("nav-open");
     };
-    const openPanel = () => {
+
+    const openMenu = () => {
       menuBtn.setAttribute("aria-expanded", "true");
       menuBtn.setAttribute("aria-label", "Close menu");
       mobilePanel.classList.add("is-open");
       document.body.classList.add("nav-open");
     };
+
     menuBtn.addEventListener("click", () => {
       const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
-      isOpen ? closePanel() : openPanel();
+      isOpen ? closeMenu() : openMenu();
     });
-    mobilePanel.querySelectorAll("a").forEach(a => a.addEventListener("click", closePanel));
+
+    mobilePanel.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", closeMenu);
+    });
+
     window.addEventListener("keydown", e => {
-      if (e.key === "Escape") closePanel();
+      if (e.key === "Escape" && mobilePanel.classList.contains("is-open")) {
+        closeMenu();
+      }
     });
   }
 
-  /* ---------- Nav hover pill (desktop link indicator) ---------- */
+  /* ---------- 5. Desktop Nav Hover Indicator Pill ---------- */
   const navLinksWrap = document.querySelector(".nav-links");
   if (navLinksWrap) {
     const links = Array.from(navLinksWrap.querySelectorAll("a"));
     const pill = document.createElement("div");
     pill.className = "nav-pill";
+    pill.setAttribute("aria-hidden", "true");
     navLinksWrap.appendChild(pill);
 
-    const moveTo = (el) => {
-      if (!el) { pill.style.opacity = "0"; return; }
+    const positionPill = (el) => {
+      if (!el) {
+        pill.style.opacity = "0";
+        return;
+      }
       pill.style.left = el.offsetLeft + "px";
       pill.style.width = el.offsetWidth + "px";
       pill.style.opacity = "1";
     };
-    const restToActive = () => moveTo(navLinksWrap.querySelector("a.active"));
+
+    const resetToActive = () => {
+      const activeLink = navLinksWrap.querySelector("a.active");
+      positionPill(activeLink);
+    };
 
     links.forEach(link => {
-      link.addEventListener("mouseenter", () => moveTo(link));
-      link.addEventListener("focus", () => moveTo(link));
+      link.addEventListener("mouseenter", () => positionPill(link));
+      link.addEventListener("focus", () => positionPill(link));
     });
-    navLinksWrap.addEventListener("mouseleave", restToActive);
-    window.addEventListener("resize", restToActive);
-    restToActive();
+
+    navLinksWrap.addEventListener("mouseleave", resetToActive);
+    window.addEventListener("resize", resetToActive);
+    resetToActive();
   }
 
-  /* ---------- Custom cursor (fine pointer only, motion allowed) ---------- */
+  /* ---------- 6. Custom Cursor (Fine pointer & motion enabled) ---------- */
   if (!isCoarsePointer && !reduceMotion && window.matchMedia("(min-width:801px)").matches) {
     const dot = document.createElement("div");
     dot.className = "cursor-dot";
@@ -134,7 +156,7 @@
     });
   }
 
-  /* ---------- Magnetic buttons ---------- */
+  /* ---------- 7. Magnetic Button Micro-Physics ---------- */
   if (!isCoarsePointer && !reduceMotion) {
     document.querySelectorAll(".btn").forEach(btn => {
       btn.addEventListener("mousemove", e => {
@@ -143,14 +165,16 @@
         const y = e.clientY - r.top - r.height / 2;
         btn.style.transform = `translate(${x * 0.22}px, ${y * 0.32}px)`;
       });
-      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "";
+      });
     });
   }
 
-  /* ---------- Spotlight + tilt surfaces ---------- */
+  /* ---------- 8. Spotlight + 3D Tilt Surfaces ---------- */
   if (!isCoarsePointer && !reduceMotion) {
-    const tiltTargets = document.querySelectorAll(".card, .tech-box, .explorer-tab, .cta-band");
-    const glowOnlyTargets = document.querySelectorAll(".eos-stage");
+    const tiltTargets = document.querySelectorAll(".card, .tech-box, .dimension-card, .cta-band");
+    const glowOnlyTargets = document.querySelectorAll(".eos-stage, .dim-panel");
 
     const attachSpotlight = (el, allowTilt) => {
       el.classList.add("has-spotlight");
@@ -167,8 +191,8 @@
         glow.style.setProperty("--sx", px + "%");
         glow.style.setProperty("--sy", py + "%");
         if (allowTilt) {
-          const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -6;
-          const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 6;
+          const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -5;
+          const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 5;
           el.style.setProperty("--tilt-x", rx.toFixed(2) + "deg");
           el.style.setProperty("--tilt-y", ry.toFixed(2) + "deg");
         }
@@ -183,7 +207,7 @@
     glowOnlyTargets.forEach(el => attachSpotlight(el, false));
   }
 
-  /* ---------- Word-by-word split for headlines & quotes ---------- */
+  /* ---------- 9. Split-Text Headline Reveal ---------- */
   const splitIntoWords = (root) => {
     let wordIndex = 0;
     const GRADIENT_CLASSES = ["gradient", "gradient-warm"];
@@ -200,7 +224,7 @@
             } else {
               const span = document.createElement("span");
               span.className = inheritedGradient ? `word ${inheritedGradient}` : "word";
-              span.style.setProperty("--stagger", (wordIndex * 0.035) + "s");
+              span.style.setProperty("--stagger", (wordIndex * 0.032) + "s");
               span.textContent = part;
               wordIndex += 1;
               frag.appendChild(span);
@@ -209,7 +233,9 @@
           node.replaceChild(frag, child);
         } else if (child.nodeType === Node.ELEMENT_NODE) {
           let grad = inheritedGradient;
-          GRADIENT_CLASSES.forEach(gc => { if (child.classList.contains(gc)) grad = gc; });
+          GRADIENT_CLASSES.forEach(gc => {
+            if (child.classList.contains(gc)) grad = gc;
+          });
           walk(child, grad);
         }
       });
@@ -225,18 +251,14 @@
     });
   }
 
-  /* ---------- Auto-tag entrance content (hero + page-hero + footer) ---------- */
+  /* ---------- 10. Reveal Trigger Observer ---------- */
   document.querySelectorAll(".hero-inner, .page-hero .container").forEach(container => {
     container.classList.add("reveal-group");
     Array.from(container.children).forEach(child => {
       if (!child.classList.contains("split-reveal")) child.classList.add("reveal");
     });
   });
-  document.querySelectorAll("footer .footer-grid, footer .footer-bottom").forEach(el => {
-    el.classList.add("reveal");
-  });
 
-  /* ---------- Scroll reveal ---------- */
   const revealEls = document.querySelectorAll(".reveal, .split-reveal");
   if (revealEls.length) {
     if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -249,12 +271,12 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.16, rootMargin: "0px 0px -40px 0px" });
+      }, { threshold: 0.14, rootMargin: "0px 0px -30px 0px" });
       revealEls.forEach(el => io.observe(el));
     }
   }
 
-  /* ---------- EOS architecture diagram (draw-on-scroll) ---------- */
+  /* ---------- 11. EOS Pipeline Flow Animation ---------- */
   const eosDiagram = document.querySelector(".eos-diagram");
   if (eosDiagram) {
     let svgRoot = null;
@@ -269,9 +291,9 @@
         path.setAttribute("id", pathId);
         [0, 0.5].forEach((phase, idx) => {
           const dot = document.createElementNS(svgNS, "circle");
-          dot.setAttribute("r", "3.4");
+          dot.setAttribute("r", "3.6");
           dot.setAttribute("fill", idx === 0 ? "#4de8dc" : "#9b7dff");
-          dot.setAttribute("opacity", "0.9");
+          dot.setAttribute("opacity", "0.95");
           const motion = document.createElementNS(svgNS, "animateMotion");
           motion.setAttribute("dur", "4.2s");
           motion.setAttribute("repeatCount", "indefinite");
@@ -286,6 +308,7 @@
         if (svgRoot.pauseAnimations) svgRoot.pauseAnimations();
       }
     });
+
     if (reduceMotion || !("IntersectionObserver" in window)) {
       eosDiagram.classList.add("is-visible");
     } else {
@@ -297,12 +320,12 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.28 });
+      }, { threshold: 0.25 });
       io.observe(eosDiagram);
     }
   }
 
-  /* ---------- Dimensions constellation ---------- */
+  /* ---------- 12. 15 Dimensions Constellation Radial Model ---------- */
   const constellation = document.querySelector(".constellation");
   if (constellation) {
     const nodesData = window.INNERMIND_DIMENSIONS || [];
@@ -320,8 +343,8 @@
     connectorLine.setAttribute("x2", "50");
     connectorLine.setAttribute("y2", "50");
     connectorLine.setAttribute("stroke", "#4de8dc");
-    connectorLine.setAttribute("stroke-width", "0.35");
-    connectorLine.setAttribute("opacity", "0.65");
+    connectorLine.setAttribute("stroke-width", "0.4");
+    connectorLine.setAttribute("opacity", "0.75");
     connectorSvg.appendChild(connectorLine);
     if (core) core.insertAdjacentElement("afterend", connectorSvg);
 
@@ -345,7 +368,7 @@
       if (panelDesc) panelDesc.textContent = d.desc;
     };
 
-    const setActive = (i) => {
+    const setActiveNode = (i) => {
       nodesLayer.querySelectorAll(".dim-node").forEach(n => n.classList.remove("is-active"));
       const node = nodesLayer.querySelector(`[data-i="${i}"]`);
       if (node) node.classList.add("is-active");
@@ -363,12 +386,12 @@
         setTimeout(() => {
           applyContent(i);
           panelFields.forEach(el => { el.style.opacity = "1"; });
-        }, 140);
+        }, 120);
       }
     };
 
     const total = nodesData.length;
-    const R = 46; // percent radius
+    const R = 46;
     nodesData.forEach((d, i) => {
       const angle = (i / total) * Math.PI * 2 - Math.PI / 2;
       const x = 50 + R * Math.cos(angle);
@@ -380,16 +403,15 @@
       btn.style.setProperty("--x", x + "%");
       btn.style.setProperty("--y", y + "%");
       btn.dataset.i = i;
-      btn.setAttribute("aria-label", d.name);
-      btn.addEventListener("mouseenter", () => setActive(i));
-      btn.addEventListener("focus", () => setActive(i));
-      btn.addEventListener("click", () => setActive(i));
+      btn.setAttribute("aria-label", `Dimension: ${d.name}`);
+      btn.addEventListener("mouseenter", () => setActiveNode(i));
+      btn.addEventListener("focus", () => setActiveNode(i));
+      btn.addEventListener("click", () => setActiveNode(i));
       nodesLayer.appendChild(btn);
     });
 
-    if (total) setActive(0);
+    if (total) setActiveNode(0);
 
-    // pause ambient rotation while the visitor is engaging with it
     if (ring) {
       constellation.addEventListener("mouseenter", () => { ring.style.animationPlayState = "paused"; });
       constellation.addEventListener("mouseleave", () => { ring.style.animationPlayState = "running"; });
@@ -398,7 +420,7 @@
     }
   }
 
-  /* ---------- Applications explorer ---------- */
+  /* ---------- 13. Applications Multi-Domain Explorer ---------- */
   const explorer = document.querySelector(".explorer");
   if (explorer) {
     const tabsWrap = explorer.querySelector(".explorer-tabs");
@@ -412,8 +434,8 @@
 
     const moveIndicator = (tab) => {
       if (!indicator || !tab) return;
-      const horizontal = window.matchMedia("(max-width:1080px)").matches;
-      if (horizontal) {
+      const isMobile = window.matchMedia("(max-width:1100px)").matches;
+      if (isMobile) {
         indicator.style.height = "100%";
         indicator.style.width = tab.offsetWidth + "px";
         indicator.style.transform = `translateX(${tab.offsetLeft}px)`;
@@ -424,29 +446,31 @@
       }
     };
 
-    const activate = (tab) => {
+    const activateTab = (tab) => {
       const target = tab.getAttribute("data-target");
       tabs.forEach(t => {
-        t.classList.toggle("is-active", t === tab);
-        t.setAttribute("aria-selected", t === tab ? "true" : "false");
-        t.tabIndex = t === tab ? 0 : -1;
+        const isActive = t === tab;
+        t.classList.toggle("is-active", isActive);
+        t.setAttribute("aria-selected", isActive ? "true" : "false");
+        t.tabIndex = isActive ? 0 : -1;
       });
       panels.forEach(p => p.classList.toggle("is-active", p.id === target));
       moveIndicator(tab);
     };
+
     tabs.forEach((tab, i) => {
-      tab.addEventListener("click", () => activate(tab));
+      tab.addEventListener("click", () => activateTab(tab));
       tab.addEventListener("keydown", e => {
-        const horizontal = window.matchMedia("(max-width:1080px)").matches;
-        const nextKey = horizontal ? "ArrowRight" : "ArrowDown";
-        const prevKey = horizontal ? "ArrowLeft" : "ArrowUp";
+        const isHorizontal = window.matchMedia("(max-width:1100px)").matches;
+        const nextKey = isHorizontal ? "ArrowRight" : "ArrowDown";
+        const prevKey = isHorizontal ? "ArrowLeft" : "ArrowUp";
         let target = null;
         if (e.key === nextKey) target = tabs[(i + 1) % tabs.length];
         if (e.key === prevKey) target = tabs[(i - 1 + tabs.length) % tabs.length];
         if (target) {
           e.preventDefault();
           target.focus();
-          activate(target);
+          activateTab(target);
         }
       });
     });
@@ -456,7 +480,7 @@
     window.addEventListener("resize", () => moveIndicator(explorer.querySelector(".explorer-tab.is-active") || initialTab));
   }
 
-  /* ---------- Hero cognitive field (canvas) ---------- */
+  /* ---------- 14. Hero Cognitive Field Canvas (PRESERVED) ---------- */
   const fieldWrap = document.querySelector(".hero-field");
   if (fieldWrap) {
     const canvas = document.createElement("canvas");
@@ -572,7 +596,7 @@
 
     resize();
     if (reduceMotion) {
-      step(); // draw a single static frame, no continuous animation
+      step();
     } else {
       start();
       let resizeTimer;
