@@ -12,36 +12,35 @@
   <meta property="og:url" content="https://innermindtech.com/contact.html">
   <meta property="og:image" content="assets/image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#060d19">
+  <meta name="theme-color" content="#070f1c">
   <link rel="icon" href="assets/image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav class="nav" aria-label="Main Navigation">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html" aria-label="Innermind Technologies Homepage">
-        <img src="assets/image.png" alt="Innermind Technologies emblem" width="36" height="36">
-        <span>INNERMIND TECHNOLOGIES</span>
-      </a>
-      <div class="nav-right">
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="technology.html">Technology</a>
-          <a href="about.html">About</a>
-          <a href="applications.html">Applications</a>
-          <a href="contact.html" class="active" aria-current="page">Contact</a>
+  <header>
+    <nav class="nav" aria-label="Main Navigation">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/image.png" alt="Innermind Technologies Logo" width="38" height="38">
+          <span>INNERMIND TECHNOLOGIES</span>
+        </a>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="technology.html">Technology</a>
+            <a href="about.html">About</a>
+            <a href="applications.html">Applications</a>
+            <a href="contact.html" class="active" aria-current="page">Contact</a>
+          </div>
+          <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
+          <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span></button>
         </div>
-        <a class="btn primary nav-cta" href="contact.html">Talk to Innermind</a>
-        <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span>
-        </button>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
   <div class="mobile-panel" id="mobile-nav" aria-label="Mobile Navigation">
     <a href="index.html">Home</a>
@@ -53,57 +52,53 @@
   </div>
 
   <main id="main">
-
-    <section class="page-hero">
+    <section class="page-hero band" aria-label="Contact Introduction">
+      <div class="hero-field" aria-hidden="true"></div>
       <div class="container">
-        <div class="eyebrow">Strategic Communications</div>
+        <div class="eyebrow">Direct Inquiries</div>
         <h1>Let's build technology that understands <span class="gradient">people.</span></h1>
-        <p class="lead">Connect with our team regarding academic research, technology partnerships, investment discussions, or platform integrations.</p>
+        <p class="lead">Interested in our architecture, research collaborations, or exploratory partnerships? We welcome deliberate discussions.</p>
       </div>
     </section>
 
-    <!-- CONTACT PORTAL SECTION -->
-    <section>
+    <!-- CONTACT DETAILS & FORM -->
+    <section aria-label="Contact Form and Channels">
       <div class="container contact">
         <div class="contact-info reveal">
-          <div class="eyebrow">Direct Portal</div>
-          <h2 style="margin-top: 16px;">Initiate a Dialogue.</h2>
-          <p class="muted" style="margin-top: 16px;">We welcome inquiries from researchers, engineering leaders, and potential partners exploring the frontier of affective computing.</p>
-          
+          <div class="eyebrow">Innermind Technologies</div>
+          <h2 style="margin-top:16px">Start a conversation.</h2>
+          <p class="muted" style="margin-top:16px">For institutional partnerships, scientific discussions, and strategic inquiries, connect through the channel below.</p>
           <div class="list">
-            <div>Research Collaboration &amp; Academic Inquiries</div>
-            <div>Strategic Platform Partnerships &amp; Integration</div>
-            <div>Institutional &amp; Venture Inquiries</div>
+            <div>Technology &amp; Research Collaborations</div>
+            <div>Strategic &amp; Enterprise Partnerships</div>
+            <div>Institutional &amp; General Inquiries</div>
           </div>
-
           <a class="contact-email" href="mailto:contact@innermindtech.com">
             contact@innermindtech.com
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
           </a>
         </div>
 
-        <form action="mailto:contact@innermindtech.com" method="post" enctype="text/plain" class="reveal">
+        <form action="mailto:contact@innermindtech.com" method="post" enctype="text/plain" class="reveal" aria-label="Inquiry Form">
           <div class="field">
             <label class="sr-only" for="cf-name">Your name</label>
-            <input id="cf-name" name="name" placeholder="Full name" required autocomplete="name">
+            <input id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
           </div>
           <div class="field">
             <label class="sr-only" for="cf-email">Email address</label>
-            <input id="cf-email" name="email" type="email" placeholder="Institutional or corporate email" required autocomplete="email">
+            <input id="cf-email" name="email" type="email" placeholder="Email address" required autocomplete="email">
           </div>
           <div class="field">
             <label class="sr-only" for="cf-message">Your message</label>
-            <textarea id="cf-message" name="message" placeholder="Describe your inquiry, research area, or proposed collaboration..." required></textarea>
+            <textarea id="cf-message" name="message" placeholder="Tell us what you'd like to discuss." required></textarea>
           </div>
-          <button class="btn primary" type="submit">
-            Send Inquiry
+          <button class="btn primary" type="submit">Send enquiry
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
           </button>
-          <p class="form-note">Submission triggers a pre-formatted message directly to our communications desk.</p>
+          <p class="form-note">This initiates your email client with your message pre-filled. We review all technical and strategic inquiries directly.</p>
         </form>
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -111,29 +106,28 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand">
-            <img src="assets/image.png" alt="Innermind Technologies emblem" width="32" height="32">
+            <img src="assets/image.png" alt="Innermind Technologies Logo" width="34" height="34">
             <span>INNERMIND TECHNOLOGIES</span>
           </div>
-          <p class="footer-blurb">Architecting deep cognition — an adaptive computational layer designed to understand changing human cognitive and emotional states.</p>
+          <p class="footer-blurb">Architecting deep cognition — an adaptive layer designed to help technology understand changing human cognitive and emotional states.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4>Site</h4>
           <a href="index.html">Home</a>
           <a href="technology.html">Technology</a>
           <a href="about.html">About</a>
           <a href="applications.html">Applications</a>
         </div>
         <div class="footer-col">
-          <h4>Research</h4>
-          <a href="technology.html#dimensions">15 Dimensions</a>
-          <a href="about.html">Research Philosophy</a>
-          <a href="applications.html">Impact Vectors</a>
-          <a href="contact.html">Partnerships</a>
+          <h4>Company</h4>
+          <a href="about.html">Mission &amp; Vision</a>
+          <a href="applications.html">Applications</a>
+          <a href="contact.html">Contact</a>
         </div>
         <div class="footer-col">
-          <h4>Direct Inquiries</h4>
+          <h4>Contact</h4>
           <a href="mailto:contact@innermindtech.com">contact@innermindtech.com</a>
-          <a href="contact.html">Strategic Portal</a>
+          <a href="contact.html">Enquiry Form</a>
         </div>
       </div>
       <div class="footer-bottom">
