@@ -1,7 +1,7 @@
 /* =================================================================
    INNERMIND TECHNOLOGIES — INTERACTION LAYER
-   Vanilla JS with zero external dependencies.
-   Safe to include across all pages.
+   Vanilla JS. Every module checks for its DOM target before running,
+   so this single file is safe to include on every page.
    ================================================================= */
 (() => {
   "use strict";
@@ -9,12 +9,12 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-  /* ---------- Footer Dynamic Year ---------- */
+  /* ---------- Footer year ---------- */
   document.querySelectorAll("[data-year]").forEach(el => {
     el.textContent = new Date().getFullYear();
   });
 
-  /* ---------- Scroll Progress Bar ---------- */
+  /* ---------- Scroll progress bar ---------- */
   {
     const bar = document.createElement("div");
     bar.className = "scroll-progress";
@@ -37,7 +37,7 @@
     window.addEventListener("resize", updateBar);
   }
 
-  /* ---------- Nav Scroll State ---------- */
+  /* ---------- Nav scroll state ---------- */
   const nav = document.querySelector(".nav");
   if (nav) {
     const setScrolled = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
@@ -45,7 +45,7 @@
     window.addEventListener("scroll", setScrolled, { passive: true });
   }
 
-  /* ---------- Mobile Navigation Panel ---------- */
+  /* ---------- Mobile navigation panel ---------- */
   const menuBtn = document.querySelector(".menu-btn");
   const mobilePanel = document.querySelector(".mobile-panel");
   if (menuBtn && mobilePanel) {
@@ -71,7 +71,7 @@
     });
   }
 
-  /* ---------- Desktop Nav Hover Pill ---------- */
+  /* ---------- Nav hover pill (desktop link indicator) ---------- */
   const navLinksWrap = document.querySelector(".nav-links");
   if (navLinksWrap) {
     const links = Array.from(navLinksWrap.querySelectorAll("a"));
@@ -96,7 +96,7 @@
     restToActive();
   }
 
-  /* ---------- Custom Cursor ---------- */
+  /* ---------- Custom cursor (fine pointer only, motion allowed) ---------- */
   if (!isCoarsePointer && !reduceMotion && window.matchMedia("(min-width:801px)").matches) {
     const dot = document.createElement("div");
     dot.className = "cursor-dot";
@@ -134,7 +134,7 @@
     });
   }
 
-  /* ---------- Magnetic Button Physics ---------- */
+  /* ---------- Magnetic buttons ---------- */
   if (!isCoarsePointer && !reduceMotion) {
     document.querySelectorAll(".btn").forEach(btn => {
       btn.addEventListener("mousemove", e => {
@@ -147,10 +147,10 @@
     });
   }
 
-  /* ---------- Spotlight & 3D Tilt Surfaces ---------- */
+  /* ---------- Spotlight + tilt surfaces ---------- */
   if (!isCoarsePointer && !reduceMotion) {
-    const tiltTargets = document.querySelectorAll(".card, .tech-box, .explorer-tab, .cta-band, .state-sim");
-    const glowOnlyTargets = document.querySelectorAll(".eos-stage, .telemetry-box");
+    const tiltTargets = document.querySelectorAll(".card, .tech-box, .explorer-tab, .cta-band");
+    const glowOnlyTargets = document.querySelectorAll(".eos-stage");
 
     const attachSpotlight = (el, allowTilt) => {
       el.classList.add("has-spotlight");
@@ -183,7 +183,7 @@
     glowOnlyTargets.forEach(el => attachSpotlight(el, false));
   }
 
-  /* ---------- Word-by-Word Reveal Stagger ---------- */
+  /* ---------- Word-by-word split for headlines & quotes ---------- */
   const splitIntoWords = (root) => {
     let wordIndex = 0;
     const GRADIENT_CLASSES = ["gradient", "gradient-warm"];
@@ -225,7 +225,7 @@
     });
   }
 
-  /* ---------- Auto-tag Reveal Groups ---------- */
+  /* ---------- Auto-tag entrance content (hero + page-hero + footer) ---------- */
   document.querySelectorAll(".hero-inner, .page-hero .container").forEach(container => {
     container.classList.add("reveal-group");
     Array.from(container.children).forEach(child => {
@@ -236,7 +236,7 @@
     el.classList.add("reveal");
   });
 
-  /* ---------- Scroll Reveal Observer ---------- */
+  /* ---------- Scroll reveal ---------- */
   const revealEls = document.querySelectorAll(".reveal, .split-reveal");
   if (revealEls.length) {
     if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -254,155 +254,7 @@
     }
   }
 
-  /* ---------- Multi-Instance Cognitive Field (Canvas) ---------- */
-  const fieldWraps = document.querySelectorAll(".hero-field");
-  if (fieldWraps.length) {
-    const COLORS = ["77,232,220", "93,140,255", "155,125,255"];
-
-    fieldWraps.forEach(fieldWrap => {
-      const canvas = document.createElement("canvas");
-      fieldWrap.appendChild(canvas);
-      const ctx = canvas.getContext("2d");
-      let w, h, dpr;
-      let points = [];
-      let raf = null;
-      let running = false;
-      const pointer = { x: -9999, y: -9999, active: false };
-
-      function resize() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
-        w = fieldWrap.clientWidth || fieldWrap.offsetWidth || 300;
-        h = fieldWrap.clientHeight || fieldWrap.offsetHeight || 200;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        canvas.style.width = w + "px";
-        canvas.style.height = h + "px";
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        const density = Math.max(24, Math.min(75, Math.floor((w * h) / 22000)));
-        points = Array.from({ length: density }, () => ({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.18,
-          vy: (Math.random() - 0.5) * 0.18,
-          r: Math.random() * 1.4 + 0.6,
-          c: COLORS[Math.floor(Math.random() * COLORS.length)],
-        }));
-      }
-
-      function step() {
-        ctx.clearRect(0, 0, w, h);
-        const linkDist = Math.min(140, w * 0.18);
-
-        for (let i = 0; i < points.length; i++) {
-          const p = points[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < -20) p.x = w + 20;
-          if (p.x > w + 20) p.x = -20;
-          if (p.y < -20) p.y = h + 20;
-          if (p.y > h + 20) p.y = -20;
-
-          if (pointer.active) {
-            const dx = p.x - pointer.x, dy = p.y - pointer.y;
-            const d2 = dx * dx + dy * dy;
-            if (d2 < 26000) {
-              const d = Math.sqrt(d2) || 1;
-              p.x += (dx / d) * 0.25;
-              p.y += (dy / d) * 0.25;
-            }
-          }
-        }
-
-        for (let i = 0; i < points.length; i++) {
-          for (let j = i + 1; j < points.length; j++) {
-            const a = points[i], b = points[j];
-            const dx = a.x - b.x, dy = a.y - b.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < linkDist) {
-              const alpha = (1 - dist / linkDist) * 0.22;
-              ctx.strokeStyle = `rgba(${a.c},${alpha})`;
-              ctx.lineWidth = 0.6;
-              ctx.beginPath();
-              ctx.moveTo(a.x, a.y);
-              ctx.lineTo(b.x, b.y);
-              ctx.stroke();
-            }
-          }
-        }
-
-        if (pointer.active) {
-          for (let i = 0; i < points.length; i++) {
-            const p = points[i];
-            const dx = p.x - pointer.x, dy = p.y - pointer.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 160) {
-              const alpha = (1 - dist / 160) * 0.35;
-              ctx.strokeStyle = `rgba(77,232,220,${alpha})`;
-              ctx.lineWidth = 0.7;
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(pointer.x, pointer.y);
-              ctx.stroke();
-            }
-          }
-        }
-
-        for (let i = 0; i < points.length; i++) {
-          const p = points[i];
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(${p.c},.85)`;
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        if (running) raf = requestAnimationFrame(step);
-      }
-
-      function start() {
-        if (running) return;
-        running = true;
-        raf = requestAnimationFrame(step);
-      }
-      function stop() {
-        running = false;
-        if (raf) cancelAnimationFrame(raf);
-      }
-
-      resize();
-      if (reduceMotion) {
-        step();
-      } else {
-        start();
-        let resizeTimer;
-        window.addEventListener("resize", () => {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(resize, 160);
-        });
-
-        const parentHost = fieldWrap.parentElement || fieldWrap;
-        parentHost.addEventListener("pointermove", e => {
-          const r = fieldWrap.getBoundingClientRect();
-          pointer.x = e.clientX - r.left;
-          pointer.y = e.clientY - r.top;
-          pointer.active = true;
-        });
-        parentHost.addEventListener("pointerleave", () => { pointer.active = false; });
-
-        if ("IntersectionObserver" in window) {
-          const io = new IntersectionObserver(entries => {
-            entries.forEach(entry => (entry.isIntersecting ? start() : stop()));
-          }, { threshold: 0 });
-          io.observe(fieldWrap);
-        }
-        document.addEventListener("visibilitychange", () => {
-          document.hidden ? stop() : start();
-        });
-      }
-    });
-  }
-
-  /* ---------- EOS Flow Architecture Diagram ---------- */
+  /* ---------- EOS architecture diagram (draw-on-scroll) ---------- */
   const eosDiagram = document.querySelector(".eos-diagram");
   if (eosDiagram) {
     let svgRoot = null;
@@ -450,7 +302,7 @@
     }
   }
 
-  /* ---------- Dimensions Constellation Visualizer ---------- */
+  /* ---------- Dimensions constellation ---------- */
   const constellation = document.querySelector(".constellation");
   if (constellation) {
     const nodesData = window.INNERMIND_DIMENSIONS || [];
@@ -516,7 +368,7 @@
     };
 
     const total = nodesData.length;
-    const R = 46;
+    const R = 46; // percent radius
     nodesData.forEach((d, i) => {
       const angle = (i / total) * Math.PI * 2 - Math.PI / 2;
       const x = 50 + R * Math.cos(angle);
@@ -537,6 +389,7 @@
 
     if (total) setActive(0);
 
+    // pause ambient rotation while the visitor is engaging with it
     if (ring) {
       constellation.addEventListener("mouseenter", () => { ring.style.animationPlayState = "paused"; });
       constellation.addEventListener("mouseleave", () => { ring.style.animationPlayState = "running"; });
@@ -545,7 +398,7 @@
     }
   }
 
-  /* ---------- Applications Explorer Tabs ---------- */
+  /* ---------- Applications explorer ---------- */
   const explorer = document.querySelector(".explorer");
   if (explorer) {
     const tabsWrap = explorer.querySelector(".explorer-tabs");
@@ -581,7 +434,6 @@
       panels.forEach(p => p.classList.toggle("is-active", p.id === target));
       moveIndicator(tab);
     };
-
     tabs.forEach((tab, i) => {
       tab.addEventListener("click", () => activate(tab));
       tab.addEventListener("keydown", e => {
@@ -604,67 +456,147 @@
     window.addEventListener("resize", () => moveIndicator(explorer.querySelector(".explorer-tab.is-active") || initialTab));
   }
 
-  /* ---------- Cognitive State Topology Simulator ---------- */
-  const stateSim = document.querySelector(".state-sim");
-  if (stateSim) {
-    const poly = document.getElementById("radarPolygon");
-    const desc = document.getElementById("stateDesc");
-    const mValence = document.getElementById("m-valence");
-    const mLoad = document.getElementById("m-load");
-    const mCadence = document.getElementById("m-cadence");
-    const mReceptivity = document.getElementById("m-receptivity");
+  /* ---------- Hero cognitive field (canvas) ---------- */
+  const fieldWrap = document.querySelector(".hero-field");
+  if (fieldWrap) {
+    const canvas = document.createElement("canvas");
+    fieldWrap.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    let w, h, dpr;
+    let points = [];
+    let raf = null;
+    let running = false;
+    const pointer = { x: -9999, y: -9999, active: false };
 
-    const PRESETS = {
-      flow: {
-        points: "200,60 325,130 280,265 200,315 115,245 90,135",
-        valence: "88%",
-        load: "45%",
-        cadence: "92%",
-        receptivity: "74%",
-        desc: "State: High focus stability with balanced cognitive load and positive valence alignment."
-      },
-      overload: {
-        points: "200,110 340,110 330,310 200,240 75,270 120,165",
-        valence: "24%",
-        load: "94%",
-        cadence: "40%",
-        receptivity: "31%",
-        desc: "State: Elevated cognitive strain with fragmented focus stability and elevated fatigue delta."
-      },
-      curiosity: {
-        points: "200,50 295,145 260,250 200,340 140,255 70,110",
-        valence: "92%",
-        load: "58%",
-        cadence: "78%",
-        receptivity: "96%",
-        desc: "State: High receptivity to novel inputs with exploratory pacing and low friction."
-      },
-      fatigue: {
-        points: "200,140 250,160 270,230 200,260 135,230 145,160",
-        valence: "42%",
-        load: "76%",
-        cadence: "22%",
-        receptivity: "38%",
-        desc: "State: Attenuated attentional band with slowed response cadence and high latency."
+    const COLORS = ["77,232,220", "93,140,255", "155,125,255"];
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = fieldWrap.clientWidth;
+      h = fieldWrap.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const density = Math.max(38, Math.min(80, Math.floor((w * h) / 22000)));
+      points = Array.from({ length: density }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        r: Math.random() * 1.4 + 0.6,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)],
+      }));
+    }
+
+    function step() {
+      ctx.clearRect(0, 0, w, h);
+      const linkDist = Math.min(150, w * 0.14);
+
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+
+        if (pointer.active) {
+          const dx = p.x - pointer.x, dy = p.y - pointer.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < 26000) {
+            const d = Math.sqrt(d2) || 1;
+            p.x += (dx / d) * 0.25;
+            p.y += (dy / d) * 0.25;
+          }
+        }
       }
-    };
 
-    const presetBtns = stateSim.querySelectorAll(".preset-btn");
-    presetBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        presetBtns.forEach(b => b.classList.remove("is-active"));
-        btn.classList.add("is-active");
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < points.length; j++) {
+          const a = points[i], b = points[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < linkDist) {
+            const alpha = (1 - dist / linkDist) * 0.22;
+            ctx.strokeStyle = `rgba(${a.c},${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
 
-        const data = PRESETS[btn.dataset.preset];
-        if (!data) return;
+      if (pointer.active) {
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          const dx = p.x - pointer.x, dy = p.y - pointer.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 170) {
+            const alpha = (1 - dist / 170) * 0.35;
+            ctx.strokeStyle = `rgba(77,232,220,${alpha})`;
+            ctx.lineWidth = 0.7;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(pointer.x, pointer.y);
+            ctx.stroke();
+          }
+        }
+      }
 
-        if (poly) poly.setAttribute("points", data.points);
-        if (mValence) mValence.style.width = data.valence;
-        if (mLoad) mLoad.style.width = data.load;
-        if (mCadence) mCadence.style.width = data.cadence;
-        if (mReceptivity) mReceptivity.style.width = data.receptivity;
-        if (desc) desc.textContent = data.desc;
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${p.c},.85)`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (running) raf = requestAnimationFrame(step);
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(step);
+    }
+    function stop() {
+      running = false;
+      if (raf) cancelAnimationFrame(raf);
+    }
+
+    resize();
+    if (reduceMotion) {
+      step(); // draw a single static frame, no continuous animation
+    } else {
+      start();
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 160);
       });
-    });
+      fieldWrap.addEventListener("pointermove", e => {
+        const r = fieldWrap.getBoundingClientRect();
+        pointer.x = e.clientX - r.left;
+        pointer.y = e.clientY - r.top;
+        pointer.active = true;
+      });
+      fieldWrap.addEventListener("pointerleave", () => { pointer.active = false; });
+
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => (entry.isIntersecting ? start() : stop()));
+        }, { threshold: 0 });
+        io.observe(fieldWrap);
+      }
+      document.addEventListener("visibilitychange", () => {
+        document.hidden ? stop() : start();
+      });
+    }
   }
 })();
