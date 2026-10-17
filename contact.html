@@ -46,13 +46,12 @@
   <a href="about.html">About</a>
   <a href="applications.html">Applications</a>
   <a href="contact.html" class="active">Contact</a>
-  <div class="mp-foot">business@innermindtech.com</div>
+  <div class="mp-foot"><a href="mailto:business@innermindtech.com" style="color:inherit;text-decoration:none">business@innermindtech.com</a></div>
 </div>
 
 <main id="main">
 
-  <section class="page-hero">
-    <div class="hero-field" aria-hidden="true"></div>
+  <section class="page-hero band">
     <div class="container">
       <div class="eyebrow">Contact</div>
       <h1>Let's build technology that understands <span class="gradient">people.</span></h1>
@@ -71,13 +70,26 @@
           <div>Strategic partnerships</div>
           <div>Business enquiries</div>
         </div>
-        <a class="contact-email" href="mailto:business@innermindtech.com">
-          business@innermindtech.com
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
-        </a>
+        <div class="contact-email-wrapper">
+          <a class="contact-email" id="business-email-link" href="mailto:business@innermindtech.com?subject=Enquiry%20%E2%80%94%20Innermind%20Technologies" title="Click to open your mailbox or email app">
+            business@innermindtech.com
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+          <div class="contact-email-options">
+            <button type="button" class="copy-email-btn" id="copy-email-btn" aria-label="Copy business email" title="Copy to clipboard">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy email</span>
+            </button>
+            <a class="webmail-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=business@innermindtech.com&su=Enquiry%20%E2%80%94%20Innermind%20Technologies" target="_blank" rel="noopener noreferrer" title="Open directly in Gmail">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span>Open in Gmail</span>
+            </a>
+          </div>
+          <span class="copy-toast" id="copy-toast" role="status" aria-live="polite"></span>
+        </div>
       </div>
 
-      <form action="mailto:business@innermindtech.com" method="post" enctype="text/plain" class="reveal">
+      <form id="contact-form" action="mailto:business@innermindtech.com" method="get" class="reveal">
         <div class="field">
           <label class="sr-only" for="cf-name">Your name</label>
           <input id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
@@ -91,9 +103,10 @@
           <textarea id="cf-message" name="message" placeholder="Tell us what you'd like to discuss." required></textarea>
         </div>
         <button class="btn primary" type="submit">Send enquiry
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
         </button>
-        <p class="form-note">This opens your email client with the message pre-filled — we read every enquiry personally.</p>
+        <p class="form-note">This opens your email client with the message pre-filled to business@innermindtech.com — we read every enquiry personally.</p>
+        <div class="form-feedback" id="form-feedback" style="display:none"></div>
       </form>
     </div>
   </section>
