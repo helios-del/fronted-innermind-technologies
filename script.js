@@ -599,4 +599,253 @@
       });
     }
   }
+
+  /* ---------- Contact Email & Enquiry Form Handlers ---------- */
+  const BUSINESS_EMAIL = "business@innermindtech.com";
+
+  // Copy email button
+  const copyBtn = document.getElementById("copy-email-btn");
+  const copyToast = document.getElementById("copy-toast");
+  function showCopyToast(msg) {
+    if (!copyToast) return;
+    copyToast.textContent = msg;
+    copyToast.classList.add("is-active");
+    setTimeout(() => copyToast.classList.remove("is-active"), 3500);
+  }
+
+  function fallbackCopyText(text) {
+    const tempInput = document.createElement("input");
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    try {
+      document.execCommand("copy");
+      showCopyToast("✓ Copied business@innermindtech.com to clipboard!");
+    } catch (err) {}
+    document.body.removeChild(tempInput);
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener("click", () => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(BUSINESS_EMAIL).then(() => {
+          showCopyToast("✓ Copied business@innermindtech.com to clipboard!");
+        }).catch(() => {
+          fallbackCopyText(BUSINESS_EMAIL);
+        });
+      } else {
+        fallbackCopyText(BUSINESS_EMAIL);
+      }
+    });
+  }
+
+  // Primary email link click feedback
+  const businessEmailLink = document.getElementById("business-email-link");
+  if (businessEmailLink) {
+    businessEmailLink.addEventListener("click", () => {
+      showCopyToast("Opening mailbox... (business@innermindtech.com copied)");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(BUSINESS_EMAIL).catch(() => {});
+      }
+    });
+  }
+
+  // Contact form submission
+  const contactForm = document.getElementById("contact-form") || document.querySelector(".contact form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById("cf-name");
+      const emailInput = document.getElementById("cf-email");
+      const messageInput = document.getElementById("cf-message");
+      const feedback = document.getElementById("form-feedback");
+
+      const name = nameInput ? nameInput.value.trim() : "";
+      const email = emailInput ? emailInput.value.trim() : "";
+      const message = messageInput ? messageInput.value.trim() : "";
+
+      if (!message) {
+        if (messageInput) messageInput.focus();
+        return;
+      }
+
+      const subject = encodeURIComponent(`Enquiry from ${name || "Visitor"} — Innermind Technologies`);
+      const bodyLines = [
+        `Name: ${name || "Not provided"}`,
+        `Email: ${email || "Not provided"}`,
+        "",
+        "Message:",
+        message,
+        "",
+        "---",
+        "Sent via Innermind Technologies enquiry form"
+      ];
+      const body = encodeURIComponent(bodyLines.join("\n"));
+
+      const mailtoUrl = `mailto:${BUSINESS_EMAIL}?subject=${subject}&body=${body}`;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${BUSINESS_EMAIL}&su=${subject}&body=${body}`;
+
+      if (feedback) {
+        feedback.style.display = "block";
+        feedback.innerHTML = `
+          <div><strong>Opening your mailbox...</strong> To: <code>${BUSINESS_EMAIL}</code></div>
+          <div style="margin-top:6px;font-size:12.5px;opacity:0.9;">
+            If your email app didn't open automatically:
+            <a href="${mailtoUrl}" style="color:var(--cyan);text-decoration:underline;margin-left:4px;">Retry default mail app</a> or
+            <a href="${gmailUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:underline;margin-left:4px;">Open in Gmail</a>
+          </div>
+        `;
+      }
+
+      // Copy email to clipboard as backup
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(BUSINESS_EMAIL).catch(() => {});
+      }
+
+      // Trigger mailto
+      window.location.href = mailtoUrl;
+    });
+  }
+
+  /* ---------- Sarvam AI Visitor Popup & Modal (Home Page) ---------- */
+  {
+    const toast = document.getElementById("sarvam-toast");
+    const modal = document.getElementById("sarvam-modal");
+    const reopenChip = document.getElementById("sarvam-reopen-chip");
+    const openBtn = document.getElementById("sarvam-open-btn");
+    const toastCloseBtn = document.getElementById("sarvam-toast-close");
+    const modalCloseBtn = document.getElementById("sarvam-modal-close");
+    const modalDismissBtn = document.getElementById("sarvam-modal-dismiss-btn");
+    const backdrop = document.getElementById("sarvam-modal-backdrop");
+    const copyBtn = document.getElementById("sarvam-copy-btn");
+    const copyText = document.getElementById("sarvam-copy-text");
+    const toastMsg = document.getElementById("sarvam-toast-msg");
+    const SARVAM_EMAIL = "yogesh689714@gmail.com";
+
+    if (toast && modal) {
+      const showToast = () => {
+        toast.classList.remove("is-hidden");
+        requestAnimationFrame(() => {
+          setTimeout(() => toast.classList.add("is-visible"), 50);
+        });
+      };
+
+      const hideToast = () => {
+        toast.classList.remove("is-visible");
+        setTimeout(() => {
+          toast.classList.add("is-hidden");
+        }, 380);
+        if (reopenChip) {
+          reopenChip.style.display = "inline-flex";
+          requestAnimationFrame(() => {
+            setTimeout(() => reopenChip.classList.add("is-visible"), 80);
+          });
+        }
+      };
+
+      const openModal = () => {
+        hideToast();
+        modal.style.display = "flex";
+        // Trigger reflow to run CSS animation
+        void modal.offsetWidth;
+        modal.classList.add("is-active");
+        document.body.style.overflow = "hidden";
+      };
+
+      const closeModal = () => {
+        modal.classList.remove("is-active");
+        setTimeout(() => {
+          modal.style.display = "none";
+          document.body.style.overflow = "";
+        }, 320);
+        if (reopenChip) {
+          reopenChip.style.display = "inline-flex";
+          reopenChip.classList.add("is-visible");
+        }
+      };
+
+      // Automatically present toast after short entrance delay
+      setTimeout(showToast, 900);
+
+      // Open modal when clicking toast or the CTA button inside toast
+      if (openBtn) {
+        openBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openModal();
+        });
+      }
+      toast.addEventListener("click", (e) => {
+        if (!e.target.closest("#sarvam-toast-close")) {
+          openModal();
+        }
+      });
+
+      // Close toast button
+      if (toastCloseBtn) {
+        toastCloseBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          hideToast();
+        });
+      }
+
+      // Reopen chip button
+      if (reopenChip) {
+        reopenChip.addEventListener("click", openModal);
+      }
+
+      // Modal close triggers
+      if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
+      if (modalDismissBtn) modalDismissBtn.addEventListener("click", closeModal);
+      if (backdrop) backdrop.addEventListener("click", closeModal);
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("is-active")) {
+          closeModal();
+        }
+      });
+
+      // Copy email action with instant visual feedback
+      const showFeedback = (msg) => {
+        if (!toastMsg) return;
+        toastMsg.textContent = msg;
+        toastMsg.classList.add("is-active");
+        setTimeout(() => toastMsg.classList.remove("is-active"), 3500);
+      };
+
+      const fallbackCopy = (text, cb) => {
+        const temp = document.createElement("input");
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          document.execCommand("copy");
+          if (cb) cb();
+        } catch (err) {}
+        document.body.removeChild(temp);
+      };
+
+      if (copyBtn) {
+        copyBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const prevLabel = copyText ? copyText.textContent : "Copy email";
+          const notifySuccess = () => {
+            if (copyText) copyText.textContent = "✓ Copied!";
+            showFeedback("✓ Copied yogesh689714@gmail.com to clipboard!");
+            setTimeout(() => {
+              if (copyText) copyText.textContent = prevLabel;
+            }, 2500);
+          };
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(SARVAM_EMAIL).then(notifySuccess).catch(() => {
+              fallbackCopy(SARVAM_EMAIL, notifySuccess);
+            });
+          } else {
+            fallbackCopy(SARVAM_EMAIL, notifySuccess);
+          }
+        });
+      }
+    }
+  }
 })();
