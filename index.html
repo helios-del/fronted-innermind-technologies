@@ -309,6 +309,119 @@
     </div>
   </footer>
 
+  <!-- SARVAM AI INTERACTIVE POPUP & MODAL -->
+  <!-- 1. Floating Prompt Toast -->
+  <aside id="sarvam-toast" class="sarvam-toast" role="region" aria-label="Sarvam AI visitor notification">
+    <div class="sarvam-toast-header">
+      <div class="sarvam-pulse-badge">
+        <span class="sarvam-pulse-dot" aria-hidden="true"></span>
+        <span>Visitor Note</span>
+      </div>
+      <button type="button" class="sarvam-toast-close" id="sarvam-toast-close" aria-label="Dismiss notification" title="Dismiss">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sarvam-toast-body">
+      <h3 class="sarvam-toast-title">Are you from Sarvam AI?</h3>
+      <p class="sarvam-toast-text">I have a quick clarification regarding this website &amp; the <strong>Emotional Operating System</strong>.</p>
+    </div>
+    <div class="sarvam-toast-actions">
+      <button type="button" class="btn primary sarvam-toast-btn" id="sarvam-open-btn">
+        <span>Yes, view note</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 2. Persistent Floating Reopen Chip (shown if dismissed or modal closed) -->
+  <button type="button" id="sarvam-reopen-chip" class="sarvam-reopen-chip" aria-label="Open Sarvam AI note" style="display:none">
+    <span class="sarvam-pulse-dot" aria-hidden="true"></span>
+    <span>Visiting from <strong>Sarvam AI</strong>? Click here</span>
+  </button>
+
+  <!-- 3. Full Detail Modal Dialog -->
+  <div id="sarvam-modal" class="sarvam-modal" role="dialog" aria-modal="true" aria-labelledby="sarvam-modal-title" style="display:none">
+    <div class="sarvam-modal-backdrop" id="sarvam-modal-backdrop"></div>
+    <div class="sarvam-modal-dialog">
+      <div class="sarvam-modal-card">
+        <button type="button" class="sarvam-modal-close" id="sarvam-modal-close" aria-label="Close dialog" title="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+
+        <div class="sarvam-modal-header">
+          <div class="sarvam-eyebrow">
+            <span class="sarvam-tag">Sarvam AI Inquiry</span>
+            <span class="sarvam-author">A note from Yogesh</span>
+          </div>
+          <h2 id="sarvam-modal-title">Are you from <span class="gradient">Sarvam AI?</span></h2>
+          <p class="sarvam-modal-subtitle">A brief clarification regarding this website &amp; the Emotional Operating System</p>
+        </div>
+
+        <div class="sarvam-modal-body">
+          <!-- Point 1 -->
+          <div class="sarvam-note-box">
+            <div class="sarvam-note-icon sarvam-icon-cyan" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="sarvam-note-content">
+              <h4>The Website vs. My Project</h4>
+              <p>This website itself is <strong>not my project</strong>, but the <strong>Emotional Operating System</strong> explained on the website <em>is</em> the project I have conceived, designed, and built.</p>
+            </div>
+          </div>
+
+          <!-- Point 2 -->
+          <div class="sarvam-note-box">
+            <div class="sarvam-note-icon sarvam-icon-violet" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="sarvam-note-content">
+              <h4>Built Locally · Deployment Status</h4>
+              <p>I have built the Emotional Operating System <strong>locally</strong> and have not deployed it publicly yet, as running the real-time affective pipeline and continuous inference requires <strong>additional computational and cloud resources</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Point 3 -->
+          <div class="sarvam-note-box">
+            <div class="sarvam-note-icon sarvam-icon-amber" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="sarvam-note-content">
+              <h4>Let's Connect &amp; Discuss</h4>
+              <p>If you want to discuss the project, explore the architecture, or review a live walkthrough of the local implementation, we can have a meet!</p>
+            </div>
+          </div>
+
+          <!-- Contact & Meeting Card -->
+          <div class="sarvam-contact-card">
+            <div class="sarvam-contact-meta">
+              <span class="sarvam-contact-label">Direct Meeting &amp; Discussion Contact</span>
+              <span class="sarvam-email-value" id="sarvam-email-text">yogesh689714@gmail.com</span>
+            </div>
+            <div class="sarvam-action-row">
+              <a class="btn primary sarvam-btn-primary" href="mailto:yogesh689714@gmail.com?subject=Sarvam%20AI%20%E2%80%94%20Discussion%20re:%20Emotional%20Operating%20System&body=Hi%20Yogesh,%0A%0AWe%20saw%20your%20note%20regarding%20the%20Emotional%20Operating%20System%20and%20would%20like%20to%20connect%20for%20a%20meet/discussion.%0A%0ABest%20regards," target="_blank" rel="noopener noreferrer">
+                <span>Schedule a meet</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              </a>
+              <button type="button" class="btn sarvam-copy-btn" id="sarvam-copy-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="sarvam-copy-text">Copy email</span>
+              </button>
+              <a class="btn sarvam-webmail-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=yogesh689714@gmail.com&su=Sarvam%20AI%20%E2%80%94%20Discussion%20re:%20Emotional%20Operating%20System&body=Hi%20Yogesh,%0A%0AWe%20saw%20your%20note%20regarding%20the%20Emotional%20Operating%20System%20and%20would%20like%20to%20connect%20for%20a%20meet/discussion.%0A%0ABest%20regards," target="_blank" rel="noopener noreferrer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span>Open in Gmail</span>
+              </a>
+            </div>
+            <div id="sarvam-toast-msg" class="sarvam-toast-msg" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="sarvam-modal-footer">
+          <button type="button" class="sarvam-btn-dismiss" id="sarvam-modal-dismiss-btn">Close note</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js" defer></script>
 </body>
 
