@@ -1155,58 +1155,78 @@ body.nav-open .scroll-progress{opacity:0}
 }
 
 .collab-logo-wrap{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:var(--bg-soft);
+  width:82px;
+  height:82px;
+  border-radius:var(--radius-sm);
+  background:#fff;
   border:1px solid var(--line);
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
   flex-shrink:0;
+  padding:6px;
   transition:border-color var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
 }
 .collab-card:hover .collab-logo-wrap{
   border-color:var(--line-strong);
+  box-shadow:0 0 24px rgba(255,255,255,.06);
 }
 
-.collab-svg{
-  width:96px;
-  height:96px;
+.collab-img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
 }
 
 .collab-info{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:8px;
   align-items:center;
-}
-.collab-abbr{
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:.78rem;
-  letter-spacing:.14em;
-  color:var(--text-soft);
-  text-transform:uppercase;
 }
 .collab-name{
   font-family:var(--font-body);
-  font-size:.85rem;
-  line-height:1.5;
+  font-size:.875rem;
+  font-weight:500;
+  line-height:1.55;
   color:var(--text-soft);
+  text-align:center;
 }
 .collab-dept{
   display:inline-block;
-  margin-top:4px;
-  font-family:var(--font-mono);
-  font-size:.72rem;
-  letter-spacing:.05em;
-  color:var(--text-mute);
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--line);
+  margin-top:2px;
+  font-family:var(--font-display);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  background:rgba(77,232,220,.08);
+  border:1px solid rgba(77,232,220,.22);
   border-radius:var(--radius-full);
-  padding:3px 12px;
+  padding:4px 14px;
+}
+#collab-iit-bhu .collab-dept{
+  color:var(--amber);
+  background:rgba(255,182,114,.08);
+  border-color:rgba(255,182,114,.22);
+}
+#collab-psychiatry .collab-dept{
+  color:var(--violet);
+  background:rgba(155,125,255,.08);
+  border-color:rgba(155,125,255,.22);
+}
+#collab-psychology .collab-dept{
+  color:var(--cyan);
+  background:rgba(77,232,220,.08);
+  border-color:rgba(77,232,220,.22);
+}
+#collab-neurology .collab-dept{
+  color:var(--blue);
+  background:rgba(93,140,255,.08);
+  border-color:rgba(93,140,255,.22);
 }
 
 /* Responsive: 2-col on tablet, 1-col on mobile */
