@@ -1077,3 +1077,150 @@ body.nav-open .scroll-progress{opacity:0}
   .eos-diagram.is-visible .eos-stage{opacity:1;transform:none}
   .constellation-ring{animation:none}
 }
+
+/* ---------- 23. COLLABORATORS ---------- */
+.collab-section{
+  padding:120px 0;
+  position:relative;
+  overflow:hidden;
+}
+.collab-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 700px 400px at 20% 60%,rgba(77,232,220,.05),transparent 65%),
+    radial-gradient(ellipse 600px 400px at 85% 30%,rgba(155,125,255,.06),transparent 65%);
+  pointer-events:none;
+}
+
+.collab-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:28px;
+  margin-top:64px;
+}
+
+.collab-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  padding:36px 28px 32px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) var(--ease),
+    box-shadow var(--dur-med) var(--ease);
+  cursor:default;
+}
+.collab-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%);
+  border-radius:inherit;
+  pointer-events:none;
+}
+.collab-card:hover{
+  transform:translateY(-8px);
+  border-color:var(--line-signal);
+  box-shadow:var(--shadow-card),var(--glow-cyan);
+}
+
+/* IIT BHU — amber glow on hover */
+#collab-iit-bhu:hover{
+  border-color:rgba(255,182,114,.38);
+  box-shadow:var(--shadow-card),0 0 70px rgba(255,182,114,.15);
+}
+/* Psychiatry — violet glow */
+#collab-psychiatry:hover{
+  border-color:rgba(155,125,255,.38);
+  box-shadow:var(--shadow-card),0 0 70px rgba(155,125,255,.15);
+}
+/* Psychology — cyan glow */
+#collab-psychology:hover{
+  border-color:rgba(77,232,220,.38);
+  box-shadow:var(--shadow-card),0 0 70px rgba(77,232,220,.15);
+}
+/* Neurology — blue glow */
+#collab-neurology:hover{
+  border-color:rgba(93,140,255,.38);
+  box-shadow:var(--shadow-card),0 0 70px rgba(93,140,255,.15);
+}
+
+.collab-logo-wrap{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  background:var(--bg-soft);
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  flex-shrink:0;
+  transition:border-color var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
+}
+.collab-card:hover .collab-logo-wrap{
+  border-color:var(--line-strong);
+}
+
+.collab-svg{
+  width:96px;
+  height:96px;
+}
+
+.collab-info{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:center;
+}
+.collab-abbr{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:.78rem;
+  letter-spacing:.14em;
+  color:var(--text-soft);
+  text-transform:uppercase;
+}
+.collab-name{
+  font-family:var(--font-body);
+  font-size:.85rem;
+  line-height:1.5;
+  color:var(--text-soft);
+}
+.collab-dept{
+  display:inline-block;
+  margin-top:4px;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.05em;
+  color:var(--text-mute);
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+  border-radius:var(--radius-full);
+  padding:3px 12px;
+}
+
+/* Responsive: 2-col on tablet, 1-col on mobile */
+@media(max-width:900px){
+  .collab-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media(max-width:520px){
+  .collab-grid{
+    grid-template-columns:1fr;
+    max-width:340px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .collab-section{padding:80px 0;}
+}
