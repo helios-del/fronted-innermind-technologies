@@ -555,9 +555,9 @@ body.nav-open .scroll-progress{opacity:0}
 }
 .footer-col a:hover::after{right:0}
 
-/* ---------- 20k. SARVAM AI VISITOR POPUP & MODAL ---------- */
+/* ---------- 20k. intelligent AI VISITOR POPUP & MODAL ---------- */
 /* Floating prompt toast */
-.sarvam-toast {
+.intelligent-toast {
   position: fixed;
   right: 28px;
   bottom: 28px;
@@ -577,29 +577,29 @@ body.nav-open .scroll-progress{opacity:0}
   cursor: pointer;
   transition: transform var(--dur-med) var(--ease-out), opacity var(--dur-med) var(--ease-out), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
-.sarvam-toast:hover {
+.intelligent-toast:hover {
   border-color: rgba(77, 232, 220, 0.6);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 45px rgba(77, 232, 220, 0.22);
 }
-.sarvam-toast.is-visible {
+.intelligent-toast.is-visible {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
 }
-.sarvam-toast.is-hidden {
+.intelligent-toast.is-hidden {
   transform: translateY(30px);
   opacity: 0;
   pointer-events: none;
   display: none !important;
 }
 
-.sarvam-toast-header {
+.intelligent-toast-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.sarvam-pulse-badge {
+.intelligent-pulse-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -613,15 +613,15 @@ body.nav-open .scroll-progress{opacity:0}
   border-radius: var(--radius-full);
   border: 1px solid rgba(77, 232, 220, 0.25);
 }
-.sarvam-pulse-dot {
+.intelligent-pulse-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--cyan);
   box-shadow: 0 0 8px var(--cyan);
-  animation: sarvamPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: intelligentPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-@keyframes sarvamPulse {
+@keyframes intelligentPulse {
   0%, 100% {
     opacity: 1;
     transform: scale(1);
@@ -634,7 +634,7 @@ body.nav-open .scroll-progress{opacity:0}
   }
 }
 
-.sarvam-toast-close {
+.intelligent-toast-close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -647,35 +647,35 @@ body.nav-open .scroll-progress{opacity:0}
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease);
 }
-.sarvam-toast-close:hover {
+.intelligent-toast-close:hover {
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
   border-color: var(--line-strong);
 }
 
-.sarvam-toast-title {
+.intelligent-toast-title {
   font-size: 17px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.02em;
   margin-bottom: 6px;
 }
-.sarvam-toast-text {
+.intelligent-toast-text {
   font-size: 13.5px;
   line-height: 1.5;
   color: var(--text-soft);
 }
-.sarvam-toast-text strong {
+.intelligent-toast-text strong {
   color: var(--cyan);
   font-weight: 600;
 }
-.sarvam-toast-actions {
+.intelligent-toast-actions {
   margin-top: 16px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.sarvam-toast-btn {
+.intelligent-toast-btn {
   padding: 9px 18px;
   font-size: 13px;
   font-weight: 600;
@@ -683,7 +683,7 @@ body.nav-open .scroll-progress{opacity:0}
 }
 
 /* Floating Reopen Chip */
-.sarvam-reopen-chip {
+.intelligent-reopen-chip {
   position: fixed;
   right: 28px;
   bottom: 28px;
@@ -707,22 +707,22 @@ body.nav-open .scroll-progress{opacity:0}
   transform: translateY(16px);
   transition: all var(--dur-med) var(--ease);
 }
-.sarvam-reopen-chip.is-visible {
+.intelligent-reopen-chip.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
-.sarvam-reopen-chip:hover {
+.intelligent-reopen-chip:hover {
   border-color: var(--cyan);
   transform: translateY(-2px);
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.65), 0 0 32px rgba(77, 232, 220, 0.28);
 }
-.sarvam-reopen-chip strong {
+.intelligent-reopen-chip strong {
   color: var(--cyan);
   font-weight: 700;
 }
 
 /* Full detail modal */
-.sarvam-modal {
+.intelligent-modal {
   position: fixed;
   inset: 0;
   z-index: 200;
@@ -732,7 +732,7 @@ body.nav-open .scroll-progress{opacity:0}
   padding: 24px 16px;
   overflow-y: auto;
 }
-.sarvam-modal-backdrop {
+.intelligent-modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(4, 8, 15, 0.82);
@@ -741,14 +741,14 @@ body.nav-open .scroll-progress{opacity:0}
   opacity: 0;
   transition: opacity var(--dur-med) var(--ease);
 }
-.sarvam-modal-dialog {
+.intelligent-modal-dialog {
   position: relative;
   width: 100%;
   max-width: 680px;
   z-index: 2;
   margin: auto;
 }
-.sarvam-modal-card {
+.intelligent-modal-card {
   position: relative;
   background: linear-gradient(170deg, rgba(13, 27, 45, 0.96) 0%, rgba(7, 15, 28, 0.98) 100%);
   border: 1px solid var(--line-signal);
@@ -759,15 +759,15 @@ body.nav-open .scroll-progress{opacity:0}
   transform: scale(0.94) translateY(24px);
   transition: transform var(--dur-med) var(--ease-out), opacity var(--dur-med) var(--ease);
 }
-.sarvam-modal.is-active .sarvam-modal-backdrop {
+.intelligent-modal.is-active .intelligent-modal-backdrop {
   opacity: 1;
 }
-.sarvam-modal.is-active .sarvam-modal-card {
+.intelligent-modal.is-active .intelligent-modal-card {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-.sarvam-modal-close {
+.intelligent-modal-close {
   position: absolute;
   top: 22px;
   right: 22px;
@@ -783,20 +783,20 @@ body.nav-open .scroll-progress{opacity:0}
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease);
 }
-.sarvam-modal-close:hover {
+.intelligent-modal-close:hover {
   background: rgba(255, 255, 255, 0.14);
   color: #fff;
   border-color: var(--cyan);
   transform: rotate(90deg);
 }
 
-.sarvam-eyebrow {
+.intelligent-eyebrow {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 14px;
 }
-.sarvam-tag {
+.intelligent-tag {
   font-family: var(--font-mono);
   font-size: 11.5px;
   text-transform: uppercase;
@@ -807,31 +807,31 @@ body.nav-open .scroll-progress{opacity:0}
   padding: 3px 9px;
   border-radius: 4px;
 }
-.sarvam-author {
+.intelligent-author {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--text-mute);
 }
 
-.sarvam-modal-header h2 {
+.intelligent-modal-header h2 {
   font-size: 28px;
   line-height: 1.2;
   letter-spacing: -0.025em;
   margin-bottom: 8px;
 }
-.sarvam-modal-subtitle {
+.intelligent-modal-subtitle {
   font-size: 14.5px;
   color: var(--text-soft);
   margin-bottom: 24px;
 }
 
-.sarvam-modal-body {
+.intelligent-modal-body {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.sarvam-note-box {
+.intelligent-note-box {
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -841,11 +841,11 @@ body.nav-open .scroll-progress{opacity:0}
   border: 1px solid var(--line);
   transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
 }
-.sarvam-note-box:hover {
+.intelligent-note-box:hover {
   border-color: var(--line-strong);
   background: rgba(255, 255, 255, 0.04);
 }
-.sarvam-note-icon {
+.intelligent-note-icon {
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -855,66 +855,66 @@ body.nav-open .scroll-progress{opacity:0}
   flex-shrink: 0;
   border: 1px solid var(--line);
 }
-.sarvam-icon-cyan {
+.intelligent-icon-cyan {
   background: rgba(77, 232, 220, 0.1);
   color: var(--cyan);
   border-color: rgba(77, 232, 220, 0.25);
 }
-.sarvam-icon-violet {
+.intelligent-icon-violet {
   background: rgba(155, 125, 255, 0.1);
   color: var(--violet);
   border-color: rgba(155, 125, 255, 0.25);
 }
-.sarvam-icon-amber {
+.intelligent-icon-amber {
   background: rgba(255, 182, 114, 0.1);
   color: var(--amber);
   border-color: rgba(255, 182, 114, 0.25);
 }
 
-.sarvam-note-content h4 {
+.intelligent-note-content h4 {
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 600;
   color: #fff;
   margin-bottom: 4px;
 }
-.sarvam-note-content p {
+.intelligent-note-content p {
   font-size: 14px;
   line-height: 1.55;
   color: var(--text-soft);
 }
-.sarvam-note-content p strong {
+.intelligent-note-content p strong {
   color: #fff;
   font-weight: 600;
 }
-.sarvam-note-content p em {
+.intelligent-note-content p em {
   color: var(--cyan);
   font-style: normal;
   font-weight: 600;
 }
 
 /* Contact & Meeting Box */
-.sarvam-contact-card {
+.intelligent-contact-card {
   margin-top: 10px;
   padding: 22px 22px 20px;
   border-radius: var(--radius-md);
   background: linear-gradient(135deg, rgba(77, 232, 220, 0.07) 0%, rgba(93, 140, 255, 0.05) 100%);
   border: 1px solid rgba(77, 232, 220, 0.32);
 }
-.sarvam-contact-meta {
+.intelligent-contact-meta {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-bottom: 16px;
 }
-.sarvam-contact-label {
+.intelligent-contact-label {
   font-family: var(--font-mono);
   font-size: 11.5px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-mute);
 }
-.sarvam-email-value {
+.intelligent-email-value {
   font-family: var(--font-mono);
   font-size: 18px;
   font-weight: 600;
@@ -922,17 +922,17 @@ body.nav-open .scroll-progress{opacity:0}
   word-break: break-all;
 }
 
-.sarvam-action-row {
+.intelligent-action-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
 }
-.sarvam-btn-primary {
+.intelligent-btn-primary {
   padding: 10px 18px;
   font-size: 13.5px;
 }
-.sarvam-copy-btn, .sarvam-webmail-btn {
+.intelligent-copy-btn, .intelligent-webmail-btn {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -947,14 +947,14 @@ body.nav-open .scroll-progress{opacity:0}
   text-decoration: none;
   transition: all var(--dur-fast) var(--ease);
 }
-.sarvam-copy-btn:hover, .sarvam-webmail-btn:hover {
+.intelligent-copy-btn:hover, .intelligent-webmail-btn:hover {
   background: rgba(77, 232, 220, 0.12);
   border-color: var(--cyan);
   color: #fff;
   transform: translateY(-1px);
 }
 
-.sarvam-toast-msg {
+.intelligent-toast-msg {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--cyan);
@@ -964,19 +964,19 @@ body.nav-open .scroll-progress{opacity:0}
   min-height: 18px;
   margin-top: 10px;
 }
-.sarvam-toast-msg.is-active {
+.intelligent-toast-msg.is-active {
   opacity: 1;
   transform: translateY(0);
 }
 
-.sarvam-modal-footer {
+.intelligent-modal-footer {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
   border-top: 1px solid var(--line);
   padding-top: 18px;
 }
-.sarvam-btn-dismiss {
+.intelligent-btn-dismiss {
   padding: 9px 20px;
   font-family: var(--font-body);
   font-size: 13px;
@@ -988,7 +988,7 @@ body.nav-open .scroll-progress{opacity:0}
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease);
 }
-.sarvam-btn-dismiss:hover {
+.intelligent-btn-dismiss:hover {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.05);
@@ -1033,37 +1033,37 @@ body.nav-open .scroll-progress{opacity:0}
   .explorer-panels{padding:32px 22px}
   .cta-band{padding:44px 20px}
   h1{letter-spacing:-.02em}
-  .sarvam-toast {
+  .intelligent-toast {
     right: 14px;
     bottom: 14px;
     width: calc(100vw - 28px);
     padding: 18px 16px;
   }
-  .sarvam-reopen-chip {
+  .intelligent-reopen-chip {
     right: 14px;
     bottom: 14px;
     font-size: 12px;
     padding: 8px 14px;
   }
-  .sarvam-modal {
+  .intelligent-modal {
     padding: 14px 10px;
   }
-  .sarvam-modal-card {
+  .intelligent-modal-card {
     padding: 28px 18px 22px;
     border-radius: var(--radius-md);
   }
-  .sarvam-modal-header h2 {
+  .intelligent-modal-header h2 {
     font-size: 22px;
   }
-  .sarvam-note-box {
+  .intelligent-note-box {
     flex-direction: column;
     gap: 10px;
   }
-  .sarvam-action-row {
+  .intelligent-action-row {
     flex-direction: column;
     align-items: stretch;
   }
-  .sarvam-action-row .btn, .sarvam-action-row .sarvam-copy-btn, .sarvam-action-row .sarvam-webmail-btn {
+  .intelligent-action-row .btn, .intelligent-action-row .intelligent-copy-btn, .intelligent-action-row .intelligent-webmail-btn {
     justify-content: center;
     width: 100%;
   }
