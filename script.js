@@ -708,20 +708,20 @@
     });
   }
 
-  /* ---------- Sarvam AI Visitor Popup & Modal (Home Page) ---------- */
+  /* ---------- intelligent AI Visitor Popup & Modal (Home Page) ---------- */
   {
-    const toast = document.getElementById("sarvam-toast");
-    const modal = document.getElementById("sarvam-modal");
-    const reopenChip = document.getElementById("sarvam-reopen-chip");
-    const openBtn = document.getElementById("sarvam-open-btn");
-    const toastCloseBtn = document.getElementById("sarvam-toast-close");
-    const modalCloseBtn = document.getElementById("sarvam-modal-close");
-    const modalDismissBtn = document.getElementById("sarvam-modal-dismiss-btn");
-    const backdrop = document.getElementById("sarvam-modal-backdrop");
-    const copyBtn = document.getElementById("sarvam-copy-btn");
-    const copyText = document.getElementById("sarvam-copy-text");
-    const toastMsg = document.getElementById("sarvam-toast-msg");
-    const SARVAM_EMAIL = "yogesh689714@gmail.com";
+    const toast = document.getElementById("intelligent-toast");
+    const modal = document.getElementById("intelligent-modal");
+    const reopenChip = document.getElementById("intelligent-reopen-chip");
+    const openBtn = document.getElementById("intelligent-open-btn");
+    const toastCloseBtn = document.getElementById("intelligent-toast-close");
+    const modalCloseBtn = document.getElementById("intelligent-modal-close");
+    const modalDismissBtn = document.getElementById("intelligent-modal-dismiss-btn");
+    const backdrop = document.getElementById("intelligent-modal-backdrop");
+    const copyBtn = document.getElementById("intelligent-copy-btn");
+    const copyText = document.getElementById("intelligent-copy-text");
+    const toastMsg = document.getElementById("intelligent-toast-msg");
+    const intelligent_EMAIL = "yogesh689714@gmail.com";
 
     if (toast && modal) {
       const showToast = () => {
@@ -776,7 +776,7 @@
         });
       }
       toast.addEventListener("click", (e) => {
-        if (!e.target.closest("#sarvam-toast-close")) {
+        if (!e.target.closest("#intelligent-toast-close")) {
           openModal();
         }
       });
@@ -838,11 +838,11 @@
           };
 
           if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(SARVAM_EMAIL).then(notifySuccess).catch(() => {
-              fallbackCopy(SARVAM_EMAIL, notifySuccess);
+            navigator.clipboard.writeText(intelligent_EMAIL).then(notifySuccess).catch(() => {
+              fallbackCopy(intelligent_EMAIL, notifySuccess);
             });
           } else {
-            fallbackCopy(SARVAM_EMAIL, notifySuccess);
+            fallbackCopy(intelligent_EMAIL, notifySuccess);
           }
         });
       }
